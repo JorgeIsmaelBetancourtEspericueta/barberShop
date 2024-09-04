@@ -1,0 +1,126 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: grid;
+    height: 100vh; /* Usar 100vh para asegurar que ocupe toda la altura de la ventana */
+    grid-template: auto 1fr auto / 1fr; /* Ajuste de la cuadrícula para dispositivos móviles */
+    background: linear-gradient(#FFFF8B, #588100);
+}
+
+header {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: 'Dancing Script', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    align-items: center;
+    background: #255000;
+    padding: 10px;
+    grid-column: 1 / -1; /* Asegura que el header ocupe toda la columna */
+}
+
+main {
+    background-image: url('../Imagenes/barberia2.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    grid-column: 1 / -1; /* Asegura que main ocupe toda la columna */
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 10px; /* Añade un poco de padding para que el contenido no toque los bordes */
+}
+
+main p {
+    color: black;
+    font-size: 18px; /* Ajuste del tamaño de fuente para dispositivos móviles */
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-align: center;
+    margin: 10px;
+}
+
+main button {
+    background: #FFFF8B;
+    padding: 10px;
+    border-radius: 30px;
+    margin: 10px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 18px;
+    width: auto;
+}
+
+main img {
+    max-width: 100%; /* Asegura que la imagen no sobrepase el contenedor */
+    height: auto; /* Mantiene la proporción de la imagen */
+    margin: 10px;
+}
+
+.boton {
+    background: #CD9669;
+    padding: 10px;
+    border-radius: 30px;
+    margin: 10px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 18px;
+    width: auto;
+}
+
+main button:hover {
+    background: #255000;
+    color: white;
+}
+
+footer {
+    background: #255000;
+    color: white;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    grid-column: 1 / -1; /* Asegura que el footer ocupe toda la columna */
+}
+
+/* Media Queries para ajustar el diseño en dispositivos móviles */
+@media (max-width: 768px) {
+    body {
+        grid-template: auto 1fr auto / 1fr; /* Ajuste de la cuadrícula para dispositivos móviles */
+    }
+
+    header, footer {
+        padding: 10px;
+    }
+
+    main {
+        padding: 5px; /* Reducir padding para dispositivos móviles */
+        background-image: url('../Imagenes/barberia2.jpeg');
+        background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            width: 100%;
+            height: 90vh; /* Asegura que el main cubra toda la altura disponible */
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+    }
+
+    main p {
+        font-size: 16px; /* Tamaño de fuente más pequeño en móviles */
+    }
+
+    main button {
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    .boton {
+        padding: 10px;
+        font-size: 16px;
+    }
+}

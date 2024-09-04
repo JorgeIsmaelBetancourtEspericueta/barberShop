@@ -1,0 +1,415 @@
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+
+body {
+    display: grid;
+    height: 100vh;
+    grid-template: auto auto 1fr auto / auto 1fr  auto;   
+    background: linear-gradient(#FFFF8B, #588100);
+}
+
+header {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: 'Dancing Script','Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    align-items: center;
+    grid-column: 1 / 4;
+    grid-row: 1 /2;
+    background: #255000;
+    padding: 10px;
+}
+
+
+
+nav {
+    background: linear-gradient(#FFFF8B, #588100);
+    grid-column: 1/2;
+    grid-row: 2/4;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: white;
+}
+
+nav img {
+    display: flex;
+    flex-direction: column;
+    width: 100px;
+    height: 100px;
+    align-self: center;
+    margin-top: 30px;
+    
+}
+
+nav h1 {
+    font-size: 26px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    color: black;
+    margin-bottom: 10px;
+}
+
+nav p {
+    font-size: 24px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-align: center;
+    font-weight: bold;
+}
+
+nav h2 {
+    font-size: 26px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    color: black;
+    padding-bottom: 10px;
+
+}
+
+nav a {
+    text-decoration: none;
+    font-size: 24px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+
+}
+
+nav > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 250px;
+}
+
+nav a:hover {
+    color: black;
+    font-size: 24px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-align: center;
+    font-weight: bold;
+
+}
+
+div {
+    grid-column: 2/3;
+    grid-row: 3/4;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-self: center;
+}
+
+main {
+    background-image: url('../Imagenes/barberia.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100vh; /* Asegura que el main cubra toda la altura de la ventana */
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+
+main button {
+    background: #FFFF8B;
+    padding: 20px;
+    width: 100px;
+    border-radius: 30px;
+    margin: 10px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 23px;
+    width: auto;
+}
+
+main img {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+}
+
+.boton {
+    background: #CD9669;
+    padding: 20px;
+    width: 100px;
+    border-radius: 30px;
+    margin: 10px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 23px;
+    width: auto;
+}
+
+main button:hover {
+    background: #255000;
+    padding: 10px;
+    width: 100px;
+    border-radius: 30px;
+    margin: 10px;
+    font-weight: bold;
+    color: white;
+    width: auto;
+    padding: 20px;
+}
+
+img {
+    width: 400px;
+    height: 400px;
+}
+
+img:hover{
+    -webkit-transform:scale(1.0);transform:scale(1.05);
+}
+
+
+aside {
+    background: linear-gradient(#FFFF8B, #588100);
+    grid-column: 3/4;
+    grid-row: 2/4;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: white;
+}
+
+aside img {
+    display: flex;
+    flex-direction: column;
+    width: 100px;
+    height: 100px;
+    align-self: center;
+    margin-top: 30px;
+    
+}
+
+aside > div{
+    display: flex;
+    flex-direction: column;
+}
+
+.imgContacto, .imgRedes{
+    width: 60px;
+    height: 60px;
+}
+
+aside .imagen {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    height: 200px;
+    align-self: center;
+    margin-top: 30px;
+    
+}
+
+aside h1 {
+    font-size: 26px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    color: black
+}
+
+aside p {
+    font-size: 24px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-align: center;
+    font-weight: bold;
+}
+
+aside h2 {
+    font-size: 26px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    color: black;
+    padding-bottom: 10px;
+
+}
+
+aside a {
+    text-decoration: none;
+    font-size: 24px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+
+}
+
+aside a:hover {
+    color: black;
+    text-shadow: #FFFF8B;
+    font-size: 24px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-align: center;
+    font-weight: bold;
+
+}
+
+#map {
+    height: 400px;
+    width: 100%;
+}
+
+footer {
+    grid-row: 4/5;
+    grid-column: 1/4;
+    background: #255000;
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+}
+
+.map {
+    height: 400px;
+    width: 100%;
+}
+
+@media (max-width: 600px), (orientation: portrait){
+    body{
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: auto 2fr auto auto auto;
+        grid-template-areas: "h"
+                             "n"
+                             "m"
+                             "a"
+                             "f";
+    }
+
+    header{
+        grid-area: h;
+    }
+
+    main{
+        grid-area: m;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    nav{
+        grid-area: n;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .imagen, .imgContacto, .imgRedes{
+        width: 60px;
+        height: 60px;
+    }
+
+    nav > div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        width: 250px;
+    }
+
+    .ubicacion, .ubicacion2{
+        width: 50px;
+        height: 50px;
+    }
+
+
+    aside{
+        grid-area: a;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    aside > div{
+        display: flex;
+        flex-direction: column;
+    }
+
+    footer{
+        grid-area: f;
+    }
+}
+
+
+@media (max-width: 900px) and (orientation: landscape){
+    body{
+        display: grid;
+        grid-template-columns: auto 2fr;
+        grid-template-rows: auto 1fr 1fr auto;
+        grid-template-areas: "h h"
+                             "n m"
+                             "a m"
+                             "f f";
+    }
+
+    header{
+        grid-area: h;
+    }
+
+    main{
+        grid-area: m;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    nav{
+        grid-area: n;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+
+    nav > div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        width: 250px;
+    }
+
+    .ubicacion, .ubicacion2{
+        width: 50px;
+        height: 50px;
+    }
+
+
+    aside{
+        grid-area: a;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+
+    aside > div{
+        display: flex;
+        flex-direction: column;
+    }
+
+    footer{
+        grid-area: f;
+    }
+}

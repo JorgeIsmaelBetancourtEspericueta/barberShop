@@ -62,6 +62,9 @@
                             <a class="nav-link mx-lg-2" href="usuario.php">Usuarios</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="citas.php">Citas</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link mx-lg-2" href="agendar.php">Agendar</a>
                         </li>
 

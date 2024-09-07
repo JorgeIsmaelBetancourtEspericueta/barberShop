@@ -67,7 +67,7 @@ if (mysqli_num_rows($resultado) > 0) {
     }
 
     if (!$usuario_encontrado) {
-        redireccionar('Datos incorrectos', 'login.php');
+        redireccionar('Usuario no encontrado', 'login.php');
     }
 } else {
     redireccionar('Datos incorrectos', 'login.php');

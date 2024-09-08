@@ -11,71 +11,89 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pa' La Barber Shop</title>
-    <link rel="stylesheet" href="../Diseno/estiloIndex.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Ga+Maamli&display=swap" rel="stylesheet">
-    <style>
-        #map {
-            height: 400px;
-            width: 100%;
-        }
-    </style>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBF2gwzt2kc7o0xwUP6WXSX_3zQtJPG34g&callback=initMap"></script>
-    <script src="../scripts/mapa.js"></script>
-</head>
-<body>
-    <header>
-        <h1>"Elegancia en cada detalle."</h1>
-    </header>
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link rel="stylesheet" href="../Diseno/estiloPrincipal.css">
 
-    <nav>
-        <div>
-            <h1>Calle Olivos 67A</h1>
-            <h1>Colonia Comerciantes</h1>
-            <br>
-        </div>
-        <div>
-            <div id="map"></div>
-            <br>
-            <a href="https://maps.app.goo.gl/6LogxduiVN2n4mUr7" target="_blank">Ver en <br>Google Maps</a>
+</head>
+
+<body>
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand me-auto" href="#">Pa' La Barber Shop</a>
+            
+            <!-- Enlace de login, aparece antes de la hamburguesa en pantallas pequeñas -->
+            <?php
+            if (isset($_SESSION['usuario'])) {
+                echo '<a href="salir.php"" class="login-button order-lg-2">Salir</a>';
+            } else {
+                echo '<a href="login.php" class="login-button order-lg-2">Ingresar</a>';
+            }
+        ?>
+
+            <!-- Botón de hamburguesa -->
+            <button class="navbar-toggler order-lg-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Logo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2 active" aria-current="page" href="cortes.php">Cortes</a>
+                        </li>
+                        
+                        <?php
+                        if (isset($_SESSION['usuario'])) {
+                            echo '<li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="agendar.php">Agendar</a>
+                            </li>';
+                         
+                        } else {
+                            echo '<li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="login.php">Registrarse</a>
+                            </li>';
+                        }
+                        ?>
+                        
+                        
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="https://maps.app.goo.gl/SMNS6bEzgwQCrNUB8" target="_blank">Ubicación</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="tel:+3112695860">Whatsapp</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
         </div>
     </nav>
 
-    <main>
-        <?php
-            if (isset($_SESSION['usuario'])) {
-                echo '<a href="salir.php"><button>Salir</button></a>';
-                echo '<a href="agendar.php"><button>Agendar</button></a>';
-            } else {
-                echo '<a href="login.php"><button>Ingresar</button></a>';
-                echo '<a href="registro.php"><button>Registrarse</button></a>';
-            }
-        ?>
-        <a href="cortes.php"><button>Ver cortes</button></a>
-    </main>
+    <!--Hero section-->
+    <section class="hero-section">
+        <div class="container d-flex align-items-center justify-content-center fs-1 text-white flex-column">
+            <h1>Elegencia en cada detalle</h1>
+            <h2>Pa'la Barber Shop</h2>
 
-    <aside>
-        <img src="../Imagenes/logo.png" class="imagen">
-        <div class="contacto">
-            <img class="imgContacto" src="../Imagenes/whatsapp.png">
-            <h1>Contacto</h1>
-            <a href="tel:+3112695860">3112695860</a>
         </div>
-        <div class="redes">
-            <img class="imgRedes" src="../Imagenes/instagram.png">
-            <h2>Síguenos</h2>
-            <a href="https://www.instagram.com/palabarbershop?igsh=aWN5YnludjB5bjU0" target="_blank">Pa'la<br>Barber Shop</a>
-        </div>
-    </aside>
+    </section>
 
-    <footer>
-        <p>&copy; Todos los derechos reservados</p>
-    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
+
 </html>

@@ -66,24 +66,6 @@ main img {
     height: auto;
 }
 
-.boton {
-    background: #CD9669;
-    padding: 10px;
-    border-radius: 30px;
-    margin: 10px;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 1rem;
-}
-
-main button:hover {
-    background: #255000;
-    padding: 10px;
-    border-radius: 30px;
-    margin: 10px;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 1rem;
-}
-
 img {
     width: 400px;
     height: 400px;
@@ -135,59 +117,42 @@ select option:nth-child(even) {
     color: white;
 }
 
-table, form {
+form {
     box-sizing: border-box;
 }
 
-
-
-table {
-    border-collapse: collapse;
-    width: 100%; /* Asegura que la tabla abarque todo el ancho del contenedor */
-    table-layout: fixed; /* Asegura que la tabla use el espacio disponible */
+table td,
+table th {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: center;
 }
 
-.encabezados th {
-    background: #588100;
-    color: white;
-    padding: 10px;
-    font-size: 1.5rem;
-    cursor: pointer;
+td {
+    font-size: 1.1rem;
 }
 
-td, th {
-    padding: 10px;
-    text-align: center;
+thead th {
+  color: #fff;
 }
 
-tr {
-    font-size: 1.5rem;
-    text-align: center;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+.card {
+  border-radius: .5rem;
 }
 
-tr:nth-child(even) {
-    background: #f9f9f9;
-    color: black;
+.table-scroll {
+  border-radius: .5rem;
 }
 
-tr:nth-child(odd) {
-    background: white;
-    color: black;
+.table-scroll table thead th {
+  font-size: 1.25rem;
+  background-color: #588100;
+  color: white;
 }
-
-tr:hover {
-    background: #FFFF8B;
-    color: black;
-    cursor: pointer;
-}
-
-tr:first-child:hover {
-    background: white;
-    color: black;
-    padding: 10px;
-    font-size: 24px;
-    cursor: pointer;
+thead {
+  top: 0;
+  position: sticky;
 }
 
 /* Media Queries para hacer el diseño responsivo */
@@ -218,4 +183,83 @@ tr:first-child:hover {
         padding: 15px;
         font-size: 18px;
     }
+}
+.navbar{
+    background-color: #fff;
+    height: 80px;
+    margin: 20px;
+    border-radius: 16px;
+    padding: 0.5rem;
+}
+ 
+.navbar-brand{
+    font-weight: 500;
+    color: #588100;
+    font-size: 24px;
+    transition: 0.3s color;
+}
+.login-button {
+    background-color: #588100;
+    color: #fff;
+    font-size: 14px;
+    padding: 8px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.login-button:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+.navbar-toggler {
+    border: none;
+    font-size: 1.25rem;
+}
+
+.navbar-toggler:focus,
+.btn-close:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+.nav-link {
+    color: #666777;
+    font-weight: 500;
+    position: relative;
+    /* Posiciona el pseudo-elemento ::before */
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #000;
+}
+
+@media (min-width: 991px) {
+    .nav-link::before {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        /* Ajusta la posición vertical si lo necesitas */
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 2px;
+        background-color: #588100;
+        visibility: hidden;
+        transition: width 0.3s ease-in-out, visibility 0.3s;
+    }
+
+    .nav-link:hover::before,
+    .nav-link.active::before {
+        width: 100%;
+        visibility: visible;
+    }
+}
+.alto {
+    background: #588100;
+    color: white;
+    padding: 10px;
+    height: 130px;
 }

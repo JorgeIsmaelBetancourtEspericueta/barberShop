@@ -12,20 +12,20 @@
     $confirmar = validar($_POST['confirmar']);
 
     if($nombre == '' || $telefono == '' || $contrasenia == '' || $confirmar == ''){
-        redireccionar('Información no válida','registro.php');
+        redireccionar('Información no válida','login.php');
         return;
     }
 
     // Verificar que la contraseña y la confirmación coincidan
     if($contrasenia !== $confirmar){
-        redireccionar('Las contraseñas no coinciden', 'registro.php');
+        redireccionar('Las contraseñas no coinciden', 'login.php');
         return;
     }
 
     $conexion = conectar();
 
     if(!$conexion){
-        redireccionar('Error en la conexión','registro.php');
+        redireccionar('Error en la conexión','login.php');
         return;
     } 
 
@@ -34,7 +34,7 @@
     $resultado = mysqli_query($conexion, $sql);
 
     if(mysqli_num_rows($resultado) > 0) {
-        redireccionar('El número de teléfono ya está registrado', 'registro.php');
+        redireccionar('El número de teléfono ya está registrado', 'login.php');
         mysqli_close($conexion);
         return;
     }
@@ -52,7 +52,7 @@
     if($resultado){
         redireccionar('Datos guardados exitosamente', 'login.php');
     }else{
-        redireccionar('Error: '.mysqli_error($conexion), 'registro.php');
+        redireccionar('Error: '.mysqli_error($conexion), 'login.php');
     }
 
 ?>

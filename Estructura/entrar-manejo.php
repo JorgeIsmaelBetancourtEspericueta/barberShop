@@ -49,25 +49,24 @@ if (mysqli_num_rows($resultado) > 0) {
 
         // Comparar la contraseña ingresada con la almacenada
         if (password_verify($password, $hashed_password)) {
-            // Iniciar sesión
-            $_SESSION['usuario'] = $idCliente;  // Puedes almacenar más información si es necesario
-            $_SESSION['nombre'] = $usuario_escapado;
             // Redirigir basado en si el usuario es administrador o no
             if ($es_admin) {
+                $_SESSION['administrador'] = $es_admin;
                 redireccionar('Bienvenido administrador, ' . $usuario, 'inicioAdmon.php');
             } else {
+                $_SESSION['usuario'] = $idCliente;  // Puedes almacenar más información si es necesario
+                $_SESSION['nombre'] = $usuario_escapado;
                 redireccionar('Bienvenido, ' . $usuario, 'index.php');
             }
 
             $usuario_encontrado = true;
             break;
         } else {
-            echo 'Contraseña incorrecta<br>';
         }
     }
 
     if (!$usuario_encontrado) {
-        redireccionar('Datos incorrectos', 'login.php');
+        redireccionar('Usuario no encontrado', 'login.php');
     }
 } else {
     redireccionar('Datos incorrectos', 'login.php');

@@ -4,6 +4,8 @@ include('includes/utilerias.php');
 
 // Verifica que el idUsuario esté en la sesión
 if (!isset($_SESSION['usuario'])) {
+    
+}elseif(!isset($_SESSION['administrador'])){
     die("Error: Usuario no está autenticado.");
 }
 

@@ -8,7 +8,7 @@ USE barberia;
 CREATE TABLE barbero (
   idBarbero INT NOT NULL AUTO_INCREMENT,
   nombre VARCHAR(256) NOT NULL,
-  telefono VARCHAR(13) NOT NULL,
+  email VARCHAR(100) NOT NULL,
   PRIMARY KEY (idBarbero)
 );
 
@@ -17,7 +17,7 @@ CREATE TABLE usuarios (
   idUsuario INT NOT NULL AUTO_INCREMENT,
   nombre VARCHAR(256) NOT NULL,
   password VARCHAR(255) NOT NULL,
-  telefono VARCHAR(13) NOT NULL,
+  email VARCHAR(100) NOT NULL,
   es_admin TINYINT NOT NULL DEFAULT 0,
   PRIMARY KEY (idUsuario)
 );
@@ -36,3 +36,11 @@ CREATE TABLE citas (
   CONSTRAINT fk_citas_barbero FOREIGN KEY (idBarbero) REFERENCES barbero (idBarbero),
   CONSTRAINT fk_citas_usuario FOREIGN KEY (idUsuario) REFERENCES usuarios (idUsuario)
 );
+
+CREATE TABLE codigos (
+  idCodigo INT NOT NULL AUTO_INCREMENT,
+  codigo VARCHAR(20) NOT NULL,
+  email varchar(20) NOT NULL,
+  PRIMARY KEY (idCodigo)
+);
+

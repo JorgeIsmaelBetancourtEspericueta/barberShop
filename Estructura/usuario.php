@@ -12,22 +12,6 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const navLinks = document.querySelectorAll('.nav-link');
-
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                // Remover la clase "active" de todos los enlaces
-                navLinks.forEach(l => l.classList.remove('active'));
-                
-                // Agregar la clase "active" al enlace clicado
-                this.classList.add('active');
-            });
-        });
-    });
-    </script>
-
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container-fluid">
             

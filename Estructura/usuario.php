@@ -12,22 +12,6 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const navLinks = document.querySelectorAll('.nav-link');
-
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                // Remover la clase "active" de todos los enlaces
-                navLinks.forEach(l => l.classList.remove('active'));
-                
-                // Agregar la clase "active" al enlace clicado
-                this.classList.add('active');
-            });
-        });
-    });
-    </script>
-
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container-fluid">
             
@@ -89,7 +73,7 @@
                             <thead style="background-color: #002d72;">
                             <tr>
                                 <th scope="col">Nombre</th>
-                                <th scope="col">Telefono</th>
+                                <th scope="col">Email</th>
                                 <th scope="col">Eliminar</th>
                             </tr>
                             </thead>
@@ -139,10 +123,10 @@
 function ver_usuarios($conexion, $buscar = '') {
     // Si hay un valor de búsqueda, agregar una cláusula WHERE a la consulta
     if (!empty($buscar)) {
-        $sql = "SELECT idUsuario, nombre, telefono FROM usuarios WHERE es_admin = 0 AND nombre LIKE '%$buscar%'";
+        $sql = "SELECT idUsuario, nombre, email FROM usuarios WHERE es_admin = 0 AND nombre LIKE '%$buscar%'";
     } else {
         // Consulta predeterminada sin búsqueda
-        $sql = "SELECT idUsuario, nombre, telefono FROM usuarios WHERE es_admin = 0";
+        $sql = "SELECT idUsuario, nombre, email FROM usuarios WHERE es_admin = 0";
     }
 
     $resultado = mysqli_query($conexion, $sql);
@@ -156,12 +140,12 @@ function ver_usuarios($conexion, $buscar = '') {
         while ($renglon = mysqli_fetch_assoc($resultado)) {
             $idUsuario = $renglon['idUsuario'];
             $nombre = $renglon['nombre'];
-            $telefono = $renglon['telefono'];
+            $email = $renglon['email'];
 
             echo
             "<tr>
                 <td>$nombre</td>
-                <td>$telefono</td>
+                <td>$email</td>
                 <td>
                     <form method='POST' action='eliminar_usuario.php' style='display:inline;' onsubmit='confirmarEliminacion(event)'>
                         <input type='hidden' name='idUsuario' value='$idUsuario'>

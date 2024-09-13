@@ -62,12 +62,14 @@
             citas.fecha, 
             citas.hora, 
             citas.servicio, 
-            citas.idUsuario, 
+            usuarios.nombre, 
             barbero.nombre AS nombreBarbero
         FROM 
             citas
         INNER JOIN 
             barbero ON citas.idBarbero = barbero.idBarbero
+        INNER JOIN 
+            usuarios ON citas.idUsuario = usuarios.idUsuario
         WHERE 
             citas.fecha = '$fecha' OR '$fecha' = 'all';
         ";
@@ -85,7 +87,7 @@
                 $idCita = $renglon['idCita'];
                 $hora = $renglon['hora'];
                 $servicio = $renglon['servicio'];
-                $nombreUsuario = $renglon['idUsuario'];
+                $nombreUsuario = $renglon['nombre'];
                 $nombreBarbero = $renglon['nombreBarbero'];
     
                 echo
@@ -95,7 +97,7 @@
                     <td>$servicio</td>
                     <td>$nombreUsuario</td>
                     <td>$nombreBarbero</td>
-                    <td><button onclick=\"cancelarCita($idCita)\" class='boton'>Cancelar</button></td>
+                    <td><button onclick=\"cancelarCita($idCita)\" class=\"btn btn-danger btn-sm\">Cancelar</button></td>
                 </tr>"; 
             }
         } else {

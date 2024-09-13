@@ -28,7 +28,7 @@ if (!$conexion) {
 $usuario_escapado = mysqli_real_escape_string($conexion, $usuario);
 
 // Verificar si el usuario existe y obtener la contraseña
-$sql = "SELECT idUsuario, password, es_admin FROM usuarios WHERE nombre = '$usuario_escapado'";
+$sql = "SELECT idUsuario, password, es_admin, nombre FROM usuarios WHERE email = '$usuario_escapado'";
 $resultado = mysqli_query($conexion, $sql);
 
 // Manejar errores de consulta
@@ -46,6 +46,7 @@ if (mysqli_num_rows($resultado) > 0) {
         $hashed_password = $fila['password'];
         $idCliente = $fila['idUsuario'];
         $es_admin = $fila['es_admin'];
+        $nombre = $fila['nombre'];
 
         // Comparar la contraseña ingresada con la almacenada
         if (password_verify($password, $hashed_password)) {
@@ -56,7 +57,7 @@ if (mysqli_num_rows($resultado) > 0) {
             } else {
                 $_SESSION['usuario'] = $idCliente;  // Puedes almacenar más información si es necesario
                 $_SESSION['nombre'] = $usuario_escapado;
-                redireccionar('Bienvenido, ' . $usuario, 'index.php');
+                redireccionar('Bienvenido, ' . $nombre, 'index.php');
             }
 
             $usuario_encontrado = true;

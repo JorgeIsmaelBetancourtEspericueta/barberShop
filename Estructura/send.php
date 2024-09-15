@@ -47,19 +47,39 @@ try {
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
-    $mail->Username = 'jismaelbetan@gmail.com';
-    $mail->Password = 'ivoejiegttdwsdgy';
+    $mail->Username = 'palabarbershop@gmail.com';
+    $mail->Password = 'wizmgqoeovpmwvcm';
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
     $mail->Port = 465;
 
     // Remitente y destinatario
-    $mail->setFrom('jismaelbetan@gmail.com');
+    $mail->setFrom('palabarbershop@gmail.com');
     $mail->addAddress($_POST["email"]);
 
     // Contenido del correo
+ 
+    $mail->AddEmbeddedImage('../Imagenes/logo.png', 'logo_empresa');
+
+    // Contenido del correo con HTML, estilos y la imagen embebida
     $mail->isHTML(true);
     $mail->Subject = 'Tu codigo de validacion';
-    $mail->Body = "Tu código de validación es: <b>$codigo</b>";
+    $mail->Body = "
+        <div style='background-color: #f4f4f4; padding: 20px; font-family: Arial, sans-serif;'>
+            
+            <h2 style='color: #333;'>¡Bienvenido a nuestra plataforma!</h2>
+            <p style='font-size: 16px; color: #555;'>
+                Tu código de validación es: 
+                <span style='color: #e74c3c; font-weight: bold;'>$codigo</span>
+            </p>
+            <div style='text-align: center;'>
+                <img src='cid:logo_empresa' alt='Logo de la Empresa' style='width: 150px;'>
+            </div>
+            <p style='font-size: 14px; color: #999;'>
+                Si no solicitaste este código, por favor ignora este correo.
+            </p>
+        </div>
+    ";
+
 
     // Envío del correo
     $mail->send();
@@ -72,7 +92,7 @@ try {
     echo "
         <script>
             alert('El correo no pudo ser enviado. Error: {$mail->ErrorInfo}');
-            document.location.href = 'registro.php';
+            document.location.href = 'login.php';
         </script>
         ";
 }

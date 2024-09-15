@@ -32,6 +32,9 @@ if (!$conexion) {
     return;
 }
 
+
+
+
 // Verificar si el código es válido y obtener el email correspondiente
 $sql_codigo = "SELECT email FROM codigos WHERE codigo = '$codigo'";
 $resultado_codigo = mysqli_query($conexion, $sql_codigo);
@@ -75,7 +78,10 @@ $sql_insert = "INSERT INTO usuarios (nombre, password, email) VALUES ('$nombre',
 $resultado_insert = mysqli_query($conexion, $sql_insert);
 
 if ($resultado_insert) {
-    redireccionar('Datos guardados exitosamente', 'registro.php');
+    // Borrar todos los registros de la tabla 'codigos'
+    $sql_borrar_codigos = "DELETE FROM codigos";
+    mysqli_query($conexion, $sql_borrar_codigos);
+    redireccionar('Datos guardados exitosamente', 'login.php');
 } else {
     redireccionar('Error: ' . mysqli_error($conexion), 'registro.php');
 }

@@ -40,7 +40,7 @@ CREATE TABLE citas (
 CREATE TABLE codigos (
   idCodigo INT NOT NULL AUTO_INCREMENT,
   codigo VARCHAR(20) NOT NULL,
-  email varchar(20) NOT NULL,
+  email varchar(100) NOT NULL,
   PRIMARY KEY (idCodigo)
 );
 

@@ -3,10 +3,9 @@ session_start();
 include('includes/utilerias.php');
 
 // Verifica que el idUsuario esté en la sesión
-if (!isset($_SESSION['usuario'])) {
-    
-}elseif(!isset($_SESSION['administrador'])){
-    die("Error: Usuario no está autenticado.");
+
+if (!isset($_SESSION['administrador']) && !isset($_SESSION['usuario'])) {
+    die("Error: No hay ningún usuario autenticado.");
 }
 
 $conn = conectar();

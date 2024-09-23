@@ -15,15 +15,24 @@ if ($conn->connect_error) {
 
 // Consultar las citas del usuario
 $citas = [];
-$usuario = $_SESSION['usuario'];
+
+if (!empty($_SESSION['usuario'])) {
+    $usuario = $_SESSION['usuario'];
+} else if (!empty($_SESSION['administrador'])) {
+    $usuario = $_SESSION['idAdmon'];
+}
+
 $mensajeCita = '';
-$sql = "SELECT citas.idCita, citas.fecha, citas.hora, citas.servicio, citas.idUsuario, barbero.nombre AS nombreBarbero
+
+// Corrección en el campo citas.idUsuarios (debe ser citas.idUsuario)
+$sql = "SELECT citas.idCita, citas.fecha, citas.hora, citas.servicio, 
+        citas.idUsuario, barbero.nombre AS nombreBarbero
         FROM citas
-        INNER JOIN usuarios ON citas.idUsuarios = usuarios.idUsuario
+        INNER JOIN usuarios ON citas.idUsuario = usuarios.idUsuario
         INNER JOIN barbero ON citas.idBarbero = barbero.idBarbero
         WHERE usuarios.idUsuario = $usuario
         ORDER BY citas.fecha DESC, citas.hora DESC";
- 
+
 $result = $conn->query($sql);
 
 if ($result && $result->num_rows > 0) {
@@ -33,6 +42,7 @@ if ($result && $result->num_rows > 0) {
 } else {
     $mensajeCita = "No se encontró ninguna cita para el usuario.";
 }
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = $conn->real_escape_string($_POST['nombre']); // Escapando cadenas para prevenir SQL Injection
@@ -58,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Insertar datos en la tabla citas
-    $sql = "INSERT INTO citas (fecha, hora, servicio, idUsuario, idBarbero, idUsuarios) VALUES ('$fecha', '$hora', '$servicio', '$nombre', '$idBarbero', '$usuario')";
+    $sql = "INSERT INTO citas (fecha, hora, servicio, nombre, idBarbero, idUsuario) VALUES ('$fecha', '$hora', '$servicio', '$nombre', '$idBarbero', '$usuario')";
 
     if ($conn->query($sql) === TRUE) {
         redireccionar("Cita agendada correctamente.", "agendar.php");

@@ -1,4 +1,68 @@
 <?php
+  // Iniciar la sesión para almacenar valores persistentes
+  ob_start();
+  session_start();
+   $campo = '';
+   $valor = '';
+   
+   if ($_SERVER["REQUEST_METHOD"] == "POST") {
+       // Obtener los datos del formulario
+       $uno = isset($_POST['campo']) ? $_POST['campo'] : '';
+       if ($uno != '') {
+           // Procesar los datos y guardarlos en la sesión
+           echo "Formulario Campo recibido con el valor: " . htmlspecialchars($uno);
+           setCampo(htmlspecialchars($uno));
+       }
+   
+       $dos = isset($_POST['inputManual']) ? $_POST['inputManual'] : '';
+       if ($dos != '') {
+           echo "Formulario InputManual recibido con el valor: " . htmlspecialchars($dos);
+           setValor(htmlspecialchars($dos));
+       }
+
+       $tres = isset($_POST['fecha']) ? $_POST['fecha'] : '';
+       if ($tres != '') {
+            echo "Formulario fitro fecha recibido con el valor: " . htmlspecialchars($tres);
+            if($tres!='custom'){
+                setValor(htmlspecialchars($tres));
+            }
+        }
+
+        $cuatro = isset($_POST['fechaPersonalizada']) ? $_POST['fechaPersonalizada'] : '';
+        if ($cuatro != '') {
+            echo "*****Formulario fechaP recibido con el valor: " . htmlspecialchars($cuatro);
+            setValor(htmlspecialchars($cuatro));
+        }
+
+       getCampo();
+       getValor();
+   }
+   
+   function setCampo($c) {
+       if (!isset($_SESSION['campo'])) {
+           $_SESSION['campo'] = $c;  // Almacenar el valor en la sesión
+       }
+   }
+   
+   function getCampo() {
+       if (isset($_SESSION['campo'])) {
+           echo " Este es el valor de campo desde utilerias: " . $_SESSION['campo'];
+       }
+   }
+   
+   function setValor($v) {
+       if (!isset($_SESSION['valor'])) {
+           $_SESSION['valor'] = $v;  // Almacenar el valor en la sesión
+       }
+   }
+   
+   function getValor() {
+       if (isset($_SESSION['valor'])) {
+           echo " Este es el valor de valor desde utilerias: " . $_SESSION['valor'];
+       }
+   }
+   
+
     function redireccionar($mensaje, $dir){
         echo '
         <!DOCTYPE html>
@@ -55,25 +119,54 @@
 
     }
 
-    function ver_citas($fecha, $conexion) {
-        $sql = "
-        SELECT 
-            citas.idCita,  /* Agregar ID de la cita */
-            citas.fecha, 
-            citas.hora, 
-            citas.servicio, 
-            usuarios.nombre, 
-            barbero.nombre AS nombreBarbero
-        FROM 
-            citas
-        INNER JOIN 
-            barbero ON citas.idBarbero = barbero.idBarbero
-        INNER JOIN 
-            usuarios ON citas.idUsuario = usuarios.idUsuario
-        WHERE 
-            citas.fecha = '$fecha' OR '$fecha' = 'all';
-        ";
-    
+    function ver_citas($conexion) {
+        echo "Entre aqui    ";
+        echo "   *Desde ver citas*    ";
+        if(!isset($_SESSION['valor'])){
+            $_SESSION['valor']='';
+        }
+        $tablaC = '';
+        if($_SESSION['campo']=='Cliente'){
+            $tablaC='usuarios.nombre';
+        }elseif($_SESSION['campo']=='Barbero'){
+            $tablaC='barbero.nombre';
+        }else{
+            $tablaC = 'citas.' . $_SESSION['campo'];
+        }
+        if(($_SESSION['campo']=='fecha' && $_SESSION['valor']=='all') || $_SESSION['valor']==''){
+            $sql = "
+            SELECT 
+                citas.idCita,  /* Agregar ID de la cita */
+                citas.fecha, 
+                citas.hora, 
+                citas.servicio, 
+                usuarios.nombre, 
+                barbero.nombre AS nombreBarbero
+            FROM 
+                citas
+            INNER JOIN 
+                barbero ON citas.idBarbero = barbero.idBarbero
+            INNER JOIN 
+                usuarios ON citas.idUsuario = usuarios.idUsuario;";
+        }else{
+            $sql = "
+            SELECT 
+                citas.idCita,  /* Agregar ID de la cita */
+                citas.fecha, 
+                citas.hora, 
+                citas.servicio, 
+                usuarios.nombre, 
+                barbero.nombre AS nombreBarbero
+            FROM 
+                citas
+            INNER JOIN 
+                barbero ON citas.idBarbero = barbero.idBarbero
+            INNER JOIN 
+                usuarios ON citas.idUsuario = usuarios.idUsuario
+            WHERE 
+                $tablaC LIKE " . "'" . $_SESSION['valor'] . "%'" . ";";
+        }
+        
         $resultado = mysqli_query($conexion, $sql);
     
         if (!$resultado) {
@@ -103,5 +196,14 @@
         } else {
             echo "<tr><td colspan='6'>No se encontraron citas para la fecha especificada.</td></tr>";
         }
+        $_SESSION = array();
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000, 
+                $params["path"], $params["domain"], 
+                $params["secure"], $params["httponly"]
+            );
+        }
+        session_destroy();
     }
 ?>

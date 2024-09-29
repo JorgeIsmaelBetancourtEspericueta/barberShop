@@ -1,3 +1,6 @@
+<?php
+include('includes/utilerias.php');
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -19,7 +22,8 @@
                 
                 <!-- Enlace de login, aparece antes de la hamburguesa en pantallas pequeñas -->
                 <?php
-                    echo '<a href="salir.php"" class="login-button order-lg-2">Salir</a>';
+                   echo '<a href="salir.php"" class="login-button order-lg-2">Salir</a>';
+                    
                 ?>
 
                 <!-- Botón de hamburguesa -->
@@ -48,12 +52,6 @@
                             <li class="nav-item" style="width: 120px;">
                                 <a class="nav-link mx-lg-2" href="agendar.php">Agendar</a>
                             </li>
-                            <li class="nav-item">
-                            <form class="form-inline d-flex" method="GET" action="usuario.php">
-                                <input class="form-control me-2" type="search" name="buscar" placeholder="Buscar" aria-label="Buscar">
-                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-                            </form>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -72,15 +70,22 @@
                         <table class="table table-striped mb-0">
                             <thead style="background-color: #002d72;">
                             <tr>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Eliminar</th>
+                                <th colspan="3">Filtrar</th>
+                                <th colspan="2">
+                                    <form class="form-inline d-flex" method="GET" action="usuario.php">
+                                        <input class="form-control me-2" type="search" name="buscar" placeholder="Buscar" aria-label="Buscar" style="width: 50%;">
+                                        <button class="btn btn-info my-2 my-sm-0" type="submit">Buscar</button>
+                                    </form>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th scope="col" colspan="2">Nombre</th>
+                                <th scope="col" colspan="2">Email</th>
+                                <th scope="col" colspan="1">Eliminar</th>
                             </tr>
                             </thead>
                             <tbody>
                             <?php
-                                include('includes/utilerias.php');
-
                                 // Conectar a la base de datos
                                 $conexion = conectar();
 
@@ -144,9 +149,9 @@ function ver_usuarios($conexion, $buscar = '') {
 
             echo
             "<tr>
-                <td>$nombre</td>
-                <td>$email</td>
-                <td>
+                <td colspan=\"2\">$nombre</td>
+                <td colspan=\"2\">$email</td>
+                <td colspan=\"1\">
                     <form method='POST' action='eliminar_usuario.php' style='display:inline;' onsubmit='confirmarEliminacion(event)'>
                         <input type='hidden' name='idUsuario' value='$idUsuario'>
                         <button type='submit' class='btn btn-danger btn-sm px-3'>x</button>

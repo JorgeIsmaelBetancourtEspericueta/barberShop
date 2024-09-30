@@ -2,7 +2,9 @@
 
     include('includes/utilerias.php');
 
-    session_start();
+    // if(!session_start()){
+    //     session_start();
+    // }
 
  
 

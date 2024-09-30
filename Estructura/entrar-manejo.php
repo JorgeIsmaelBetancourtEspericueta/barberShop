@@ -1,7 +1,7 @@
 <?php
 
 include('includes/utilerias.php');
-session_start();  // Asegúrate de que la sesión se inicia aquí
+// session_start();  // Asegúrate de que la sesión se inicia aquí
 
 if(empty($_POST)){
     redireccionar('Prohibido', 'index.php');

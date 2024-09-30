@@ -30,6 +30,7 @@ CREATE TABLE citas (
   servicio VARCHAR(100) NOT NULL,
   idUsuario INT NOT NULL,
   idBarbero INT NOT NULL,
+  nombre varchar(100),
   PRIMARY KEY (idCita),
   KEY fk_citas_usuario (idUsuario),
   KEY fk_citas_barbero (idBarbero),

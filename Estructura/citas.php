@@ -74,38 +74,87 @@
                                 </th>
                                 <th colspan="4" class="text-center">
                                     <div class="d-flex justify-content-center align-items-center gap-2">
-                                        <select name="campo" id="campo" class="form-select form-select-sm bg-light text-success w-auto" style="min-width: 200px;">
-                                            <option value="">Seleccione un campo</option>
-                                            <option value="Fecha">Fecha</option>
-                                            <option value="Hora">Hora</option>
-                                            <option value="Servicio">Servicio</option>
-                                            <option value="Cleinte">Cliente</option>
-                                            <option value="Barbero">Barbero</option>
-                                        </select>
-                                        <select name="fecha" id="filtroFecha" class="form-select form-select-sm bg-light text-success w-auto" style="min-width: 200px;">
-                                            <option value="">Seleccione una opción</option>
-                                            <option value="<?php echo date('Y-m-d'); ?>">Citas de hoy</option>
-                                            <option value="<?php echo date('Y-m-d', strtotime('+1 day')); ?>">Citas de mañana</option>
-                                            <option value="all">Todas</option>
-                                            <option value="custom">Seleccionar</option>
-                                        </select>
-                                        <!-- Input de fecha personalizado oculto por defecto -->
-                                        <input type="date" id="fechaPersonalizada" class="form-control w-auto mt-2" style="display:none;">
+                                        <form action="" method="post" id="formFiltro" class="d-flex justify-content-center align-items-center gap-2">
+                                            <!-- Selección de campo -->
+                                            <div id="opcion" class="d-flex align-items-center gap-2">
+                                                <select name="campo" id="campo" class="form-select form-select-sm bg-light text-success w-auto" style="min-width: 200px;" onchange="mostrarInputOpcion(this)">
+                                                    <option value="">Seleccione un campo</option>
+                                                    <option value="fecha">Fecha</option>
+                                                    <option value="hora">Hora</option>
+                                                    <option value="servicio">Servicio</option>
+                                                    <option value="Cliente">Cliente</option>
+                                                    <option value="Barbero">Barbero</option>
+                                                </select>
+                                            </div>
+
+                                            <!-- Input manual (visible solo si es necesario) -->
+                                            <div id="inputContainer" class="d-flex align-items-center gap-2">
+                                                <input type="text" id="inputManual" name="inputManual" class="form-control" placeholder="Escriba su opción" style="height: auto; font-size: 13px; display: none;">
+                                            </div>
+
+                                            <!-- Filtro de fecha (visible solo cuando se selecciona 'fecha') -->
+                                            <div id="fecha" class="d-flex align-items-center gap-2">
+                                                <select name="fecha" id="filtroFecha" class="form-select form-select-sm bg-light text-success w-auto" style="min-width: 200px; display: none;">
+                                                    <option value="">Seleccione una opción</option>
+                                                    <option value="<?php echo date('Y-m-d'); ?>">Citas de hoy</option>
+                                                    <option value="<?php echo date('Y-m-d', strtotime('+1 day')); ?>">Citas de mañana</option>
+                                                    <option value="all">Todas</option>
+                                                    <option value="custom">Seleccionar</option>
+                                                </select>
+                                            </div>
+
+                                            <!-- Input de fecha personalizado (visible solo si se selecciona 'custom' en el filtro de fecha) -->
+                                            <input type="date" id="fechaPersonalizada" name="fechaPersonalizada" class="form-control w-auto" style="display: none; font-size: 13px;">
+                                        </form>
 
                                         <script>
-                                            const selectFecha = document.getElementById('filtroFecha');
-                                            const inputFechaPersonalizada = document.getElementById('fechaPersonalizada');
+                                            function mostrarInputOpcion(select) {
+                                                var inputContainer = document.getElementById('inputManual');
+                                                var fechaSelect = document.getElementById('filtroFecha');
+                                                var fechaPersonalizada = document.getElementById('fechaPersonalizada');
 
-                                            selectFecha.addEventListener('change', function() {
-                                                if (this.value === 'custom') {
-                                                    inputFechaPersonalizada.style.display = 'block'; // Mostrar input de fecha
-                                                } else {
-                                                    inputFechaPersonalizada.style.display = 'none'; // Ocultar input de fecha
-                                                    inputFechaPersonalizada.value = ''; // Limpiar el valor si elige otra opción
+                                                // Ocultar todos los campos por defecto
+                                                inputContainer.style.display = 'none';
+                                                fechaSelect.style.display = 'none';
+                                                fechaPersonalizada.style.display = 'none';
+
+                                                // Mostrar el campo de texto si la opción es Cliente, Barbero, o Servicio
+                                                if (select.value == 'hora' || select.value === 'Cliente' || select.value === 'Barbero' || select.value === 'servicio') {
+                                                    inputContainer.style.display = 'flex';
                                                 }
-                                            });
+                                                
+                                                // Mostrar el campo de fecha si la opción es 'fecha'
+                                                if (select.value === 'fecha') {
+                                                    fechaSelect.style.display = 'flex';
+                                                }
+
+                                                // Control de la selección de fecha personalizada
+                                                document.getElementById('filtroFecha').addEventListener('change', function() {
+                                                    if (this.value === 'custom') {
+                                                        fechaPersonalizada.style.display = 'block';
+                                                    } else {
+                                                        fechaPersonalizada.style.display = 'none';
+                                                    }
+                                                });
+                                            }
+
+                                            function enviarFormulario() {
+                                                const formFiltroData = new FormData(document.getElementById('formFiltro'));
+
+                                                fetch('./includes/utilerias.php', {
+                                                    method: 'POST',
+                                                    body: formFiltroData
+                                                })
+                                                .then(response => response.text())
+                                                .then(data => {
+                                                    console.log('Formulario enviado:', data);
+                                                    actualizarCitas(); // Refrescar las citas después de enviar
+                                                })
+                                                .catch(error => console.error('Error:', error));
+                                            }
+
                                         </script>
-                                        <button onclick="filtrar()" class="btn btn-info btn-sm">Buscar</button>
+                                        <button onclick="enviarFormulario();" class="btn btn-info btn-sm">Buscar</button>
                                     </div>
                                 </th>
                             </tr>
@@ -119,25 +168,26 @@
                                 <th>Cancelar</th>
                              </tr>
                             </thead>
-                            <tbody>
-                                <?php
-                                    // Incluye el archivo que define la función conectar()
-                                    include('includes/utilerias.php');
-
-                                    // Definir la fecha por defecto
-                                    $fecha = isset($_GET['fecha']) ? $_GET['fecha'] : date('Y-m-d');
-
-                                    // Conectar a la base de datos
-                                    $conexion = conectar();
-
-                                    // Llamar a la función ver_citas
-                                    ver_citas($fecha, $conexion);
-
-                                    // Cerrar la conexión
-                                    mysqli_close($conexion);
-                                ?>
+                            <tbody id="citasBody">
+                                
                             </tbody>
                         </table>
+                        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                        <script>
+                            function actualizarCitas() {
+                                $.ajax({
+                                    url: 'actuVista.php',  // Archivo PHP que genera las filas del tbody
+                                    type: 'GET',
+                                    success: function(data) {
+                                        // Reemplazar el contenido del tbody con el resultado
+                                        $('#citasBody').html(data);
+                                    },
+                                    error: function() {
+                                        alert('Error al cargar los datos.');
+                                    }
+                                });
+                            }
+                        </script>
                         </div>
                     </div>
                     </div>

@@ -141,21 +141,17 @@ body{
     height: 40px;
 }
 
-.toggle-panel {
+.toggle-container{
     position: absolute;
+    top: 0;
+    left: 50%;
     width: 50%;
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Cambiado de 'left' a 'center' */
-    flex-direction: column;
-    padding: 0 30px;
-    text-align: center; /* Cambiar a 'center' si el texto necesita estar centrado */
-    top: 0;
-    transform: translateX(0);
+    overflow: hidden;
     transition: all 0.6s ease-in-out;
+    border-radius: 150px 0 0 100px;
+    z-index: 1000;
 }
-
 
 .container.active .toggle-container{
     transform: translateX(-100%);
@@ -179,20 +175,21 @@ body{
     transform: translateX(50%);
 }
 
-.toggle-panel{
+.toggle-panel {
     position: absolute;
     width: 50%;
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content: left;
+    justify-content: center; /* Cambiado de 'left' a 'center' */
     flex-direction: column;
     padding: 0 30px;
-    text-align: left;
+    text-align: center; /* Cambiar a 'center' si el texto necesita estar centrado */
     top: 0;
     transform: translateX(0);
     transition: all 0.6s ease-in-out;
 }
+
 
 .toggle-left{
     transform: translateX(-200%);

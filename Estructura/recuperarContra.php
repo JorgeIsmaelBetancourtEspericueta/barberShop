@@ -1,45 +1,40 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recuperar contraseña</title>
-    <link rel="stylesheet" href="../Diseno/estiloRecuperar.css">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="../Diseno/Prueba.css">
+    <script src="../Scripts/login.js" defer></script>
 
+    <title>Recuperar Contraseña</title>
 </head>
+
 <body>
 
-    <header><h1>Recuperar contraseña</h1></header>
+    <div class="container" id="container">
+        <!-- Sección de recuperación de contraseña -->
+        <div class="form-container sign-in">
+            <form action="recuperar-manejo.php" method="post">
+                <h1>¿Olvidaste tu contraseña?</h1>
+                <p>Escribe el correo electrónico asociado a tu cuenta y te enviaremos las instrucciones para recuperarla.</p>
+                <input type="email" name="email" id="email" required placeholder="Email">
+                <button type="submit">Recuperar Contraseña</button>
+            </form>
+        </div>
+        
+        <!-- Mensaje de bienvenida -->
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-right">
+                    <h1>¡Hola, bienvenid@!</h1>
+                    <p>Nos complace recibirte en nuestro portal oficial, donde podrás recuperar tu cuenta de manera fácil y rápida.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <main>
-        <form action="recuperar-manejo.php" method="post" enctype="multipart/form-data">
-            <fieldset>
-                <h1>Cambio de contraseña</h1>
-                <img src="../Imagenes/whatsapp.png">
-                <label>Número de celular</label> 
-                <br>
-                <input type="text" name="celular">
-                <br>
-                <img src="../Imagenes/candado.png">
-                <label>Nueva contraseña</label> 
-                <br>
-                <input type="password" name="password">
-                <br>
-                <img src="../Imagenes/candado.png">
-                <label>Nueva contraseña</label> 
-                <br>
-                <input type="password" name="confirmar">
-                <br>
-                <br>
-                <input type="submit" value="Cambiar" class="registrar">
-                <br>
-                <br>
-            </fieldset>
-            
-            
-        </form>
-    </main>
-    
 </body>
+
 </html>

@@ -10,10 +10,122 @@ body {
     grid-template-rows: auto auto; /* Ajusta la proporción del header y main */
     grid-template-areas: "h" "m";
     margin: 0;
-    background-image: url("../Imagenes/barberia.jpg");
+    background-image: url("../Imagenes/barberia.jpeg");
     background-size: cover;
     background-repeat: no-repeat;
 }
+
+.navbar{
+    background-color: #fff;
+    height: 80px;
+    margin: 20px;
+    border-radius: 16px;
+    padding: 0.5rem;
+}
+
+.navbar-brand{
+    font-weight: 500;
+    color: #588100 !important;
+    font-size: 1rem;
+    transition: 0.3s color;
+}
+
+.login-button {
+    background-color: #588100;
+    color: #fff;
+    font-size: 14px;
+    padding: 8px 20px;
+    border-radius: 50px;
+    text-decoration: none !important;
+    transition: background-color 0.3s;
+}
+
+.login-button:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+.navbar-toggler {
+    border: none;
+    font-size: 1.25rem;
+}
+
+.navbar-toggler:focus,
+.btn-close:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+.nav-link {
+    color: #666777;
+    font-weight: 500;
+    position: relative;
+    /* Posiciona el pseudo-elemento ::before */
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #000;
+}
+
+.custom-icon-color {
+    color: #588100; /* Cambia esto al color que quieras */
+}
+
+.custom-bg {
+    background-color: #588100 !important; /* Color personalizado */
+    border-radius: 10px;
+    /* padding: 20px;
+    margin: 0;
+    margin-top: 0; */
+}
+
+.border{
+    border: none !important;
+}
+
+.py-2, .p-0, .rounded-0{
+   padding: 0; 
+   padding-top: 0;
+}
+
+.card{
+    border: none;
+    border-radius: 10px !important;
+}
+
+.btn{
+    border: none !important;
+    border-radius: 10px !important;
+}
+
+.btn:hover{
+    background-color: #000 !important;
+    border-radius: 10px !important;
+}
+
+@media (min-width: 991px) {
+    .nav-link::before {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        /* Ajusta la posición vertical si lo necesitas */
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 2px;
+        background-color: #588100;
+        visibility: hidden;
+        transition: width 0.3s ease-in-out, visibility 0.3s;
+    }
+
+    .nav-link:hover::before,
+    .nav-link.active::before {
+        width: 100%;
+        visibility: visible;
+    }
+}
+
 
 header {
     grid-area: h;
@@ -39,6 +151,14 @@ main {
     box-sizing: border-box; 
 }
 
+.container{
+    margin-top: 80px;
+}
+
+.p-0{
+    border-radius: 15px;
+    background-color: #000;
+}
 
 .titulo{
     display: flex;
@@ -64,10 +184,10 @@ main {
     padding: 15px 50px 5px 50px;
 }
 
-.menu a:hover{
+/* .menu a:hover{
     background: linear-gradient(to top, #588100 20%, #255000 90%);
     color: #FFFF8B;
-}
+} */
 
 /* Añadir estilo para el enlace seleccionado */
 .menu a.selected {
@@ -121,14 +241,14 @@ img{
     text-align: center;
 }
 
-.contenedor select{
+/* .contenedor select{
     background: none;
     border: none;
     border-bottom: 1px solid white;
     color: white;
     padding: 5px;
     cursor: pointer;
-}
+} */
 
 .contenedor option{
     background: #255000;
@@ -157,9 +277,9 @@ img{
     color: white;
 }
 
-option{
+/* option{
     text-align: center;
-}
+} */
 
 
 /* ----------------- Contenedor 2 ---------------------- */

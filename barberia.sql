@@ -45,3 +45,20 @@ CREATE TABLE codigos (
   PRIMARY KEY (idCodigo)
 );
 
+CREATE TABLE descanso (
+  idDescanso INT NOT NULL AUTO_INCREMENT,
+  fecha DATE NOT NULL,
+  idBarbero INT NOT NULL,
+  PRIMARY KEY (idDescanso),
+  KEY fk_descanso_barbero (idBarbero),
+  CONSTRAINT fk_descanso_barbero FOREIGN KEY (idBarbero) REFERENCES barbero (idBarbero)
+);
+
+CREATE TABLE horarios (
+    idHorario INT AUTO_INCREMENT PRIMARY KEY,
+    idBarbero INT,
+    diaSemana ENUM('Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'),
+    horaInicio TIME,
+    horaFin TIME,
+    FOREIGN KEY (idBarbero) REFERENCES barbero(idBarbero)
+);

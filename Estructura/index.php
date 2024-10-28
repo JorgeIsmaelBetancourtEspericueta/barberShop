@@ -1,9 +1,7 @@
 <?php
     include('includes/utilerias.php');
 
-    if (session_status() == PHP_SESSION_NONE){
-        session_start();
-    }
+    session_start();
 
     if(isset($_SESSION['administrador'])){
         redireccionar2('inicioAdmon.php');
@@ -63,9 +61,9 @@
                             </li>';
                          
                         } else {
-                            echo '<li class="nav-item">
-                            <a class="nav-link mx-lg-2" href="login.php">Registrarse</a>
-                            </li>';
+                            echo "<li class='nav-item'>
+                                <a class='nav-link mx-lg-2' href='login.php'>Ingresar</a>
+                            </li>";
                         }
                         ?>
                         

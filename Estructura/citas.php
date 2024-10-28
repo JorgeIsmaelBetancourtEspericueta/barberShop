@@ -1,9 +1,17 @@
+<?php
+session_start();
+// Verifica que el idUsuario esté en la sesión
+
+if (!isset($_SESSION['administrador']) && !isset($_SESSION['usuario'])) {
+    die("Error: No hay ningún usuario autenticado.");
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pa' La Barber Shop</title>
+    <title>Pa' La Barber Shop - Citas</title>
     <link rel="stylesheet" href="../Diseno/estiloCitas.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,6 +19,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="../scripts/cita.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </head>
 <body>
@@ -47,8 +56,14 @@
                             <li class="nav-item">
                                 <a class="nav-link mx-lg-2 active" href="citas.php">Citas</a>
                             </li>
-                            <li class="nav-item" style="width: 120px;">
+                            <li class="nav-item">
                                 <a class="nav-link mx-lg-2" href="agendar.php">Agendar</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mx-lg-2" href="descansos.php">Descansos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mx-lg-2" href="horarios.php">Horarios</a>
                             </li>
                         </ul>
                     </div>
@@ -66,7 +81,7 @@
                     <div class="card">
                     <div class="card-body p-0">
                         <div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; height: 700px">
-                        <table class="table table-striped mb-0">
+                        <table class="table table-striped mb-0" id="tablaCitas">
                             <thead style="background-color: #002d72;">
                             <tr>
                                 <th colspan="2" style="text-align: center; vertical-align: middle;">
@@ -141,7 +156,7 @@
                                             function enviarFormulario() {
                                                 const formFiltroData = new FormData(document.getElementById('formFiltro'));
 
-                                                fetch('./includes/utilerias.php', {
+                                                fetch('./includes/actuVista.php', {
                                                     method: 'POST',
                                                     body: formFiltroData
                                                 })
@@ -153,8 +168,69 @@
                                                 .catch(error => console.error('Error:', error));
                                             }
 
+                                            $(document).ready(function() {
+                                                $('#botonBuscar').click(function() {
+                                                    var campoR = $(campo).val();
+                                                    var valorI = $(inputManual).val();
+                                                    var fechaR = $(filtroFecha).val();
+                                                    var perso = $(fechaPersonalizada).val();
+                                                    
+                                                    var valorR;
+
+                                                    if(campoR == 'fecha'){
+                                                        valorI = '';
+                                                        if(fechaR == 'custom'){
+                                                            fechaR = '';
+                                                        }else{
+                                                            perso = '';
+                                                        }
+                                                    }else{
+                                                        fechaR = '';
+                                                        perso = '';
+                                                    }
+
+                                                    if(valorI != ''){
+                                                        valorR = valorI;
+                                                    }else{
+                                                        if(fechaR != ''){
+                                                            valorR = fechaR;
+                                                        }else {
+                                                            if(perso != ''){
+                                                                valorR = perso;
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    console.log("campo: "+campoR);
+                                                    console.log("input manual: "+valorI);
+                                                    console.log("fecha: "+fechaR);
+                                                    console.log("perso: "+perso);
+                                                    console.log("****** Valor *****: "+valorR);
+
+                                                    // Realizar una llamada AJAX a un script PHP
+                                                    
+                                                    $.ajax({
+                                                        url: './actuVista.php',
+                                                        type: 'POST',
+                                                        data: { campo: campoR, valor: valorR },
+                                                        success: function(response) {
+                                                            console.log(response);
+                                                            if (response.success) {
+                                                                console.log('resultado:', response.resultado);
+                                                                actualizarCitas(response.resultado);
+                                                            } else {
+                                                                console.error('Error al obtener las horas:', response.message || 'Mensaje no definido');
+                                                            }
+                                                        },
+                                                        error: function(xhr, status, error) {
+                                                            console.error('Error en la llamada AJAX:', error);
+                                                        }
+                                                    });
+                                                });
+                                            });
+
                                         </script>
-                                        <button onclick="enviarFormulario();" class="btn btn-info btn-sm">Buscar</button>
+                                        <button class="btn btn-info btn-sm" id="botonBuscar">Buscar</button>
                                     </div>
                                 </th>
                             </tr>
@@ -174,18 +250,34 @@
                         </table>
                         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                         <script>
-                            function actualizarCitas() {
-                                $.ajax({
-                                    url: 'actuVista.php',  // Archivo PHP que genera las filas del tbody
-                                    type: 'GET',
-                                    success: function(data) {
-                                        // Reemplazar el contenido del tbody con el resultado
-                                        $('#citasBody').html(data);
-                                    },
-                                    error: function() {
-                                        alert('Error al cargar los datos.');
-                                    }
-                                });
+                            function actualizarCitas(data) {
+                                const tbody = document.querySelector('#tablaCitas tbody');
+                                
+                                // Limpiar el contenido del tbody antes de agregar nuevas filas
+                                tbody.innerHTML = '';
+
+                                if (data.length > 0) {
+                                    data.forEach(renglon => {
+                                        const fila = document.createElement('tr');
+
+                                        fila.innerHTML = `
+                                            <td>${renglon.fecha}</td>
+                                            <td>${renglon.hora}</td>
+                                            <td>${renglon.servicio}</td>
+                                            <td>${renglon.nombre}</td>
+                                            <td>${renglon.nombreBarbero}</td>
+                                            <td><button onclick="cancelarCita(${renglon.idCita})" class="btn btn-danger btn-sm">Cancelar</button></td>
+                                        `;
+
+                                        // Añadir la fila al cuerpo de la tabla
+                                        tbody.appendChild(fila);
+                                    });
+                                } else {
+                                    // Si no hay citas, mostrar un mensaje
+                                    const fila = document.createElement('tr');
+                                    fila.innerHTML = `<td colspan="6">No se encontraron citas con la información especificada.</td>`;
+                                    tbody.appendChild(fila);
+                                }
                             }
                         </script>
                         </div>

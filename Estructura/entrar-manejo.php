@@ -1,7 +1,7 @@
 <?php
 
 include('includes/utilerias.php');
-// session_start();  // Asegúrate de que la sesión se inicia aquí
+session_start();  // Asegúrate de que la sesión se inicia aquí
 
 if(empty($_POST)){
     redireccionar('Prohibido', 'index.php');
@@ -58,7 +58,7 @@ if (mysqli_num_rows($resultado) > 0) {
             } else {
                 $_SESSION['usuario'] = $idCliente;  // Puedes almacenar más información si es necesario
                 $_SESSION['nombre'] = $usuario_escapado;
-                redireccionar('Bienvenido, ' . $nombre, 'index.php');
+                redireccionar('Bienvenido, ' . $nombre,'index.php');
             }
 
             $usuario_encontrado = true;

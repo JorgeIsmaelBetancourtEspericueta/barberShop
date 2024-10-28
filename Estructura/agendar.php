@@ -2,6 +2,7 @@
 // session_start();
 include('includes/utilerias.php');
 
+session_start();
 // Verifica que el idUsuario esté en la sesión
 
 if (!isset($_SESSION['administrador']) && !isset($_SESSION['usuario'])) {
@@ -34,6 +35,9 @@ $sql = "SELECT citas.idCita, citas.fecha, citas.hora, citas.servicio,
         ORDER BY citas.fecha DESC, citas.hora DESC";
 
 $result = $conn->query($sql);
+
+$sqlBarber = "SELECT idBarbero, nombre FROM barbero";
+$listaBarberos = $conn->query($sqlBarber);
 
 if ($result && $result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -117,6 +121,10 @@ if (isset($_POST['fecha']) && isset($_POST['barbero'])) {
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" defer></script>
 
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </head>
 <body>
@@ -174,7 +182,6 @@ if (isset($_POST['fecha']) && isset($_POST['barbero'])) {
                                     </div>
                                 </div>
                             </div>
-
                             <!-- <label for="nombre">Nombre</label><br> -->
                             <!-- <input id="nombre" name="nombre" type="text" placeholder="Escribe tu nombre" required><br> -->
 
@@ -204,11 +211,44 @@ if (isset($_POST['fecha']) && isset($_POST['barbero'])) {
                                         </div>
                                         <select class="form-control" id="barbero" name="barbero" required onchange="actualizarHorasDisponibles()">
                                             <option value="" disabled selected>Selecciona a tu barbero</option>
-                                            <option value="1">Alex</option>
-                                            <option value="2">Mujer</option>
+                                            <?php
+                                            // Verificar si la consulta tiene resultados
+                                            if ($listaBarberos->num_rows > 0) {
+                                                while($row = $listaBarberos->fetch_assoc()) {
+                                                    echo '<option value="' . $row["idBarbero"] . '">' . $row["nombre"] . '</option>';
+                                                }
+                                            } else {
+                                                echo '<option value="" disabled>No hay barberos disponibles</option>';
+                                            }
+                                            ?>
                                         </select>
                                     </div>
                                 </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        $('#barbero').change(function() {
+                                            var barberoId = $(this).val();
+                                            // Realizar una llamada AJAX a un script PHP
+                                            $.ajax({
+                                                url: './diasDeshabilitados.php',
+                                                type: 'POST',
+                                                data: { idBarbero: barberoId },
+                                                success: function(response) {
+                                                    console.log(response);
+                                                    if (response.success) {
+                                                        console.log('Fechas:', response.fechas);
+                                                        deshabilitarFechas(response.fechas);
+                                                    } else {
+                                                        console.error('Error al obtener las fechas:', response.message || 'Mensaje no definido');
+                                                    }
+                                                },
+                                                error: function(xhr, status, error) {
+                                                    console.error('Error en la llamada AJAX:', error);
+                                                }
+                                            });
+                                        });
+                                    });
+                                </script>
                                 
                                 <!-- <label for="fecha">Fecha</label><br>
                                 <input id="fecha" name="fecha" type="date" min="2024-01-01" required onchange="actualizarHorasDisponibles()"><br> -->
@@ -218,14 +258,45 @@ if (isset($_POST['fecha']) && isset($_POST['barbero'])) {
                                         <div class="input-group-prepend">
                                             <div class="input-group-text"><i class="fa fa-calendar-alt custom-icon-color"></i></div>
                                         </div>
-                                        <input type="date" class="form-control" id="fecha" name="fecha" placeholder="Selecciona la fecha">
+                                        <input type="text" class="form-control" id="fecha" name="fecha" placeholder="Selecciona la fecha">
                                     </div>
                                 </div>
+                                <script>
+                                    function deshabilitarFechas(fechas){
+                                        flatpickr("#fecha", {
+                                            locale: "es",  // Idioma a español
+                                            minDate: "today",
+                                            disable: fechas,
+                                            dateFormat: "Y-m-d" // Formato de fecha
+                                        });
+                                    }
 
-                                
-
-
-
+                                    $(document).ready(function() {
+                                        $('#fecha').change(function() {
+                                            var fechaSelect = $(this).val();
+                                            var barberoId = $(barbero).val();
+                                            // Realizar una llamada AJAX a un script PHP
+                                            $.ajax({
+                                                url: './horas.php',
+                                                type: 'POST',
+                                                data: { fecha: fechaSelect, idBarbero: barberoId },
+                                                success: function(response) {
+                                                    console.log(response);
+                                                    if (response.success) {
+                                                        console.log('horas:', response.horarios);
+                                                        horasDisponibles(response.horarios);
+                                                    } else {
+                                                        console.error('Error al obtener las horas:', response.message || 'Mensaje no definido');
+                                                    }
+                                                },
+                                                error: function(xhr, status, error) {
+                                                    console.error('Error en la llamada AJAX:', error);
+                                                }
+                                            });
+                                        });
+                                    });
+                                    
+                                </script>
 
                                 <!-- <label for="hora">Seleccionar hora</label><br>
                                 <select id="hora" name="hora" required>
@@ -252,23 +323,74 @@ if (isset($_POST['fecha']) && isset($_POST['barbero'])) {
                                         </div>
                                         <select class="form-control" id="hora" name="hora" required onchange="actualizarHorasDisponibles()">
                                             <option value="">Selecciona la hora</option>
-                                            <option value="11:00:00">11:00 a.m.</option>
-                                            <option value="11:40:00">11:40 a.m.</option>
-                                            <option value="12:20:00">12:20 p.m.</option>
-                                            <option value="13:00:00">01:00 p.m.</option>
-                                            <option value="13:40:00">01:40 p.m.</option>
-                                            <option value="14:20:00">02:20 p.m.</option>
-                                            <option value="16:00:00">04:00 p.m.</option>
-                                            <option value="16:40:00">04:40 p.m.</option>
-                                            <option value="17:20:00">05:20 p.m.</option>
-                                            <option value="18:00:00">06:00 p.m.</option>
-                                            <option value="18:40:00">06:40 p.m.</option>
-                                            <option value="19:20:00">07:20 p.m.</option>
-                                            <option value="20:00:00">08:00 p.m.</option>
                                         </select>
                                     </div>
                                 </div>
-                                
+                                <script>
+                                    function generarIntervalos(horaInicio, horaFin, duracionCita) {
+                                        let intervalos = [];
+                                        
+                                        // Convertir las horas en objetos de fecha
+                                        let inicio = new Date(`1970-01-01T${horaInicio}`);
+                                        let fin = new Date(`1970-01-01T${horaFin}`);
+
+                                        // Iterar desde la hora de inicio hasta la hora de fin
+                                        while (inicio < fin) {
+                                            let siguienteInicio = new Date(inicio.getTime() + duracionCita * 60000); // 60000 ms = 1 minuto
+
+                                            if (siguienteInicio <= fin) {
+                                                // Agregar el intervalo si no se excede de la hora fin
+                                                intervalos.push({
+                                                    inicio: inicio.toTimeString().substring(0, 5), 
+                                                    fin: siguienteInicio.toTimeString().substring(0, 5)
+                                                });
+                                            }
+                                            
+                                            // Actualizar la hora de inicio para el siguiente intervalo
+                                            inicio = siguienteInicio;
+                                        }
+
+                                        return intervalos;
+                                    }
+
+                                    function horasDisponibles(horas) {
+                                        let intervalosTotales = [];
+                                        
+                                        // Generar intervalos para cada franja horaria
+                                        horas.forEach(hora => {
+                                            // Asegúrate de acceder a "hora.inicio" y "hora.fin", no "horas.inicio"
+                                            let intervalos = generarIntervalos(hora.inicio, hora.fin, 40);
+                                            intervalosTotales = intervalosTotales.concat(intervalos);
+                                        });
+
+                                        // Mostrar los intervalos generados en consola
+                                        console.log('Intervalos disponibles:', intervalosTotales);
+
+                                        // Mostrar los intervalos generados en consola
+                                        console.log('Intervalos disponibles:', intervalosTotales);
+
+                                        // Suponiendo que tienes un select con id 'horarios'
+                                        let select = document.getElementById('hora');
+                                        select.innerHTML = ''; 
+
+                                        let option = document.createElement('option');
+                                        let defaultOption = document.createElement('option');
+                                        defaultOption.value = '';
+                                        defaultOption.text = 'Selecciona una hora';
+                                        defaultOption.disabled = true;
+                                        defaultOption.selected = true;
+                                        select.appendChild(defaultOption);
+
+                                        intervalosTotales.forEach(function(intervalo) {
+                                            let option = document.createElement('option');
+                                            option.value = `${intervalo.inicio}`;
+                                            option.text = `${intervalo.inicio} - ${intervalo.fin}`;
+                                            select.appendChild(option);
+                                        });
+                                    }
+
+
+                                </script>
                                 <!-- <label for="servicio">Servicio</label><br>
                                 <select id="servicio" name="servicio" required>
                                     <option value="">Selecciona una opción</option>

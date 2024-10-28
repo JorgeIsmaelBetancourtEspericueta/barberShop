@@ -67,6 +67,12 @@
                         <li class="nav-item">
                             <a class="nav-link mx-lg-2" href="agendar.php">Agendar</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="descansos.php">Descansos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="horarios.php">Horarios</a>
+                        </li>
 
                     </ul>
                 </div>

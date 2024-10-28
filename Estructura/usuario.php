@@ -1,12 +1,18 @@
 <?php
 include('includes/utilerias.php');
+session_start();
+// Verifica que el idUsuario esté en la sesión
+
+if (!isset($_SESSION['administrador']) && !isset($_SESSION['usuario'])) {
+    die("Error: No hay ningún usuario autenticado.");
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pa' La Barber Shop - Usuarios Registrados</title>
+    <title>Pa' La Barber Shop - Usuarios</title>
     <link rel="stylesheet" href="../Diseno/estiloCitas.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -49,8 +55,14 @@ include('includes/utilerias.php');
                             <li class="nav-item">
                                 <a class="nav-link mx-lg-2" href="citas.php">Citas</a>
                             </li>
-                            <li class="nav-item" style="width: 120px;">
+                            <li class="nav-item">
                                 <a class="nav-link mx-lg-2" href="agendar.php">Agendar</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mx-lg-2" href="descansos.php">Descansos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mx-lg-2" href="horarios.php">Horarios</a>
                             </li>
                         </ul>
                     </div>

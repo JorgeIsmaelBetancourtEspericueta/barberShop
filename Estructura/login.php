@@ -2,10 +2,6 @@
 
     include('includes/utilerias.php');
 
-    // if(!session_start()){
-    //     session_start();
-    // }
-
  
 
     if (isset($_SESSION['usuario'])){
@@ -31,7 +27,7 @@
     <link rel="stylesheet" href="../Diseno/estiloLogin.css">
     <script src="../Scripts/login.js" defer></script>
 
-    <title>Modern Login Page | AsmrProg</title>
+    <title>Login</title>
 </head>
 
 <body>

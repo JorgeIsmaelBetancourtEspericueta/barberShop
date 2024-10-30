@@ -16,42 +16,39 @@ if (isset($_POST['accion']) && $_POST['accion'] == 'agregar') {
         $telefono = $_POST['telefono'];
 
         // Validar longitud del teléfono
-        if (strlen($telefono) !== 10) {
-            $_SESSION['error'] = "El número de teléfono debe tener 10 dígitos.";
-            header("Location: " . $_SERVER['PHP_SELF']);
+        if (strlen($telefono) !== 10 || !ctype_digit($telefono)) {
+            $error = "El número de teléfono debe tener 10 dígitos.";
+            redireccionar("El número de teléfono debe tener 10 dígitos.", "barberos.php");
             exit();
         } else {
             // Consultas para verificar si el barbero ya existe por nombre o teléfono
             $checkNombreQuery = "SELECT * FROM barbero WHERE nombre='$nombre'";
             $checkTelefonoQuery = "SELECT * FROM barbero WHERE telefono='$telefono'";
-            
+
             $nombreResult = mysqli_query($conexion, $checkNombreQuery);
             $telefonoResult = mysqli_query($conexion, $checkTelefonoQuery);
 
             if (mysqli_num_rows($nombreResult) > 0 && mysqli_num_rows($telefonoResult) > 0) {
-                $_SESSION['error'] = "El barbero ya existe en la base de datos (por nombre y teléfono).";
+                redireccionar("El barbero ya existe en la base de datos (por nombre y teléfono).", "barberos.php");
             } elseif (mysqli_num_rows($nombreResult) > 0) {
-                $_SESSION['error'] = "El nombre del barbero ya existe en la base de datos.";
+                $error = "El nombre del barbero ya existe en la base de datos.";
+                redireccionar($error, "barberos.php");
             } elseif (mysqli_num_rows($telefonoResult) > 0) {
-                $_SESSION['error'] = "El teléfono del barbero ya existe en la base de datos.";
+                $error = "El teléfono del barbero ya existe en la base de datos.";
+                redireccionar($error, "barberos.php");
             } else {
                 // Consulta SQL para insertar en la base de datos
                 $query = "INSERT INTO barbero (nombre, telefono) VALUES ('$nombre', '$telefono')";
                 if (mysqli_query($conexion, $query)) {
-                    // Redireccionar para evitar reenvío del formulario
-                    header("Location: " . $_SERVER['PHP_SELF']);
-                    exit();
+                    // Redireccionar si la inserción fue exitosa
+                    redireccionar("Barbero agregado exitosamente", "barberos.php");
                 } else {
-                    $_SESSION['error'] = "Error al insertar el barbero.";
+                    $error = "Error al insertar el barbero.";
+                    redireccionar($error, "barberos.php");
                 }
             }
-            header("Location: " . $_SERVER['PHP_SELF']);
-            exit();
         }
-    } else {
-        $_SESSION['error'] = "Error: Los campos 'nombre' y/o 'telefono' no están definidos.";
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit();
+
     }
 }
 
@@ -65,12 +62,11 @@ if (isset($_POST['accion']) && $_POST['accion'] == 'editar') {
 
         // Validar que los campos no estén vacíos
         if (empty($nombre) || empty($telefono)) {
-            $error = "Los campos 'nombre' y 'teléfono' no pueden estar vacíos.";
-            echo json_encode(['success' => false, 'error' => $error]);
+            redireccionar("Los campos 'nombre' y 'teléfono' no pueden estar vacíos.","barberos.php");
             exit();
-        } else if (strlen($telefono) !== 10) {
+        } else if (strlen($telefono) !== 10 || !ctype_digit($telefono)) {
             $error = "El número de teléfono debe tener 10 dígitos.";
-            echo json_encode(['success' => false, 'error' => $error]);
+            redireccionar($error, "barberos.php");
             exit();
         } else {
             // Consulta SQL para verificar si el barbero ya existe
@@ -81,20 +77,19 @@ if (isset($_POST['accion']) && $_POST['accion'] == 'editar') {
                 $query = "UPDATE barbero SET nombre='$nombre', telefono='$telefono' WHERE idBarbero='$idBarbero'";
                 if (mysqli_query($conexion, $query)) {
                     // Respuesta exitosa
-                    echo json_encode(['success' => true]);
+                    redireccionar("Información actualizada correctamente", "barberos.php");
                 } else {
-                    // Error al ejecutar la consulta
-                    echo json_encode(['success' => false, 'error' => 'Error al actualizar el barbero.']);
+                    redireccionar('Error al actualizar el barbero.', "barberos.php");
                 }
             } else {
                 // Duplicado encontrado
-                echo json_encode(['success' => false, 'error' => "Ya existe un barbero con ese nombre o teléfono."]);
+                redireccionar("Ya existe un barbero con ese nombre o teléfono.", "barberos.php");
             }
         }
     } else {
-        echo json_encode(['success' => false, 'error' => "Error: Los campos requeridos no están definidos."]);
+        redireccionar("Los campos requeridos no están definidos.", "barberos.php");
     }
-    exit(); // Asegúrate de salir después de procesar la solicitud
+    exit(); 
 }
 
 
@@ -155,19 +150,15 @@ if (isset($_SESSION['error'])) {
 </head>
 
 <body>
-    <?php if (isset($error)): ?>
-        <script>
-            alert("<?php echo $error; ?>");
-        </script>
-    <?php endif; ?>
 
-    <h2>Formulario para agregar barbero</h2>
+    <h2>Nuestros barberos</h2>
     <form action="" method="POST" id="barberoForm">
         <label for="nombre">Nombre del Barbero:</label>
         <input type="text" id="nombre" name="nombre" required>
         <label for="telefono">Teléfono:</label>
         <input type="tel" id="telefono" name="telefono" required>
-        <button type="submit" name="accion" value="agregar">Agregar Barbero</button>
+        <input type="hidden" id="idBarbero" name="idBarbero">
+        <button type="submit" id="botonForm" name="accion" value="agregar">Agregar Barbero</button>
     </form>
 
     <h3>Lista de Barberos</h3>
@@ -176,7 +167,8 @@ if (isset($_SESSION['error'])) {
             <tr>
                 <th>Nombre</th>
                 <th>Teléfono</th>
-                <th>Modificaciones</th>
+                <th>Modificar</th>
+                <th>Eliminar</th>
             </tr>
         </thead>
         <tbody>
@@ -186,6 +178,8 @@ if (isset($_SESSION['error'])) {
                     <td><?php echo $row['telefono']; ?></td>
                     <td>
                         <button class="btn" onclick="editarBarbero(<?php echo $row['idBarbero']; ?>)">Editar</button>
+                    </td>
+                    <td>
                         <button class="btn" onclick="eliminarBarbero(<?php echo $row['idBarbero']; ?>)">Eliminar</button>
                     </td>
                 </tr>
@@ -199,40 +193,18 @@ if (isset($_SESSION['error'])) {
             const nombreActual = fila.cells[0].textContent;
             const telefonoActual = fila.cells[1].textContent;
 
-            const nombreNuevo = prompt("Nuevo nombre:", nombreActual);
-            const telefonoNuevo = prompt("Nuevo teléfono:", telefonoActual);
+            // Rellena el formulario con los datos actuales
+            document.getElementById('nombre').value = nombreActual;
+            document.getElementById('telefono').value = telefonoActual;
+            document.getElementById('idBarbero').value = id;
 
-            if (nombreNuevo && telefonoNuevo) {
-                // Realiza una solicitud POST al servidor
-                const formData = new FormData();
-                formData.append('accion', 'editar');
-                formData.append('idBarbero', id);
-                formData.append('nombre', nombreNuevo);
-                formData.append('telefono', telefonoNuevo);
-
-                fetch('', {
-                    method: 'POST',
-                    body: formData
-                })
-                    .then(response => response.json()) // Asegúrate de que la respuesta se maneje como JSON
-                    .then(data => {
-                        if (data.success) {
-                            // Solo actualiza la visualización si la operación fue exitosa
-                            fila.cells[0].textContent = nombreNuevo;
-                            fila.cells[1].textContent = telefonoNuevo;
-                        } else {
-                            alert(data.error); // Muestra el mensaje de error recibido
-                            // No actualices la visualización en caso de error
-                        }
-                    })
-                    .catch(error => console.error('Error:', error));
-            }
+            // Cambia el botón de 'Agregar' a 'Guardar'
+            document.getElementById('botonForm').innerText = 'Guardar';
+            document.getElementById('botonForm').value = 'editar';
         }
-
 
         function eliminarBarbero(id) {
             if (confirm("¿Estás seguro de que deseas eliminar este barbero?")) {
-                // Realiza una solicitud POST al servidor
                 const formData = new FormData();
                 formData.append('accion', 'eliminar');
                 formData.append('idBarbero', id);

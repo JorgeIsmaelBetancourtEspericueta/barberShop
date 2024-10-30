@@ -156,6 +156,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <li class="nav-item">
                                 <a class="nav-link mx-lg-2 active" href="horarios.php">Horarios</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link mx-lg-2" href="barberos.php">Barberos</a>
+                            </li>
                         </ul>
                     </div>
                 </div>

@@ -62,7 +62,7 @@ if (isset($_POST['accion']) && $_POST['accion'] == 'editar') {
 
         // Validar que los campos no estén vacíos
         if (empty($nombre) || empty($telefono)) {
-            redireccionar("Los campos 'nombre' y 'teléfono' no pueden estar vacíos.","barberos.php");
+            redireccionar("Los campos 'nombre' y 'teléfono' no pueden estar vacíos.", "barberos.php");
             exit();
         } else if (strlen($telefono) !== 10 || !ctype_digit($telefono)) {
             $error = "El número de teléfono debe tener 10 dígitos.";
@@ -77,7 +77,7 @@ if (isset($_POST['accion']) && $_POST['accion'] == 'editar') {
                 $query = "UPDATE barbero SET nombre='$nombre', telefono='$telefono' WHERE idBarbero='$idBarbero'";
                 if (mysqli_query($conexion, $query)) {
                     // Respuesta exitosa
-                    redireccionar("Información actualizada correctamente", "barberos.php");
+                    // redireccionar("Información actualizada correctamente", "barberos.php");
                 } else {
                     redireccionar('Error al actualizar el barbero.', "barberos.php");
                 }
@@ -89,26 +89,28 @@ if (isset($_POST['accion']) && $_POST['accion'] == 'editar') {
     } else {
         redireccionar("Los campos requeridos no están definidos.", "barberos.php");
     }
-    exit(); 
 }
 
+// Obtiene los barberos existentes
+$barberos = mysqli_query($conexion, "SELECT * FROM barbero");
 
-// Eliminar barbero
+// Comprobar valores antes de redireccionar
 if (isset($_POST['accion']) && $_POST['accion'] == 'eliminar') {
     if (isset($_POST['idBarbero'])) {
         $idBarbero = $_POST['idBarbero'];
-
-        // Consulta SQL para eliminar de la base de datos
         $query = "DELETE FROM barbero WHERE idBarbero='$idBarbero'";
-        mysqli_query($conexion, $query);
+        if (mysqli_query($conexion, $query)) {
+            redireccionar("Barbero eliminado exitosamente", "barberos.php");
+        } else {
+            redireccionar("Error al eliminar en la base de datos.", "barberos.php");
+        }
     } else {
-        echo "Error: El campo 'idBarbero' no está definido.";
+        redireccionar("Error al eliminar el barbero", "barberos.php");
+        exit();
     }
 }
 
 
-// Obtiene los barberos existentes
-$barberos = mysqli_query($conexion, "SELECT * FROM barbero");
 
 if (isset($_SESSION['error'])) {
     echo "<script>alert('" . $_SESSION['error'] . "');</script>";
@@ -122,6 +124,8 @@ if (isset($_SESSION['error'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <title>Gestión de Barberos</title>
     <style>
         table,
@@ -217,6 +221,7 @@ if (isset($_SESSION['error'])) {
                         if (response.ok) {
                             const fila = document.querySelector(`tr[data-id='${id}']`);
                             fila.parentNode.removeChild(fila);
+                            redireccionar("Barbero eliminado exitosamente", "Barberos.php")
                         } else {
                             alert('Error al eliminar el barbero.');
                         }
@@ -224,6 +229,23 @@ if (isset($_SESSION['error'])) {
                     .catch(error => console.error('Error:', error));
             }
         }
+
+        function redireccionar(mensaje, dir) {
+            Swal.fire({
+                title: "Mensaje",
+                text: mensaje,
+                icon: "info",
+                confirmButtonColor: "#4CAF50",
+                confirmButtonText: "OK"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    console.log("Redireccionando a: " + dir); // Para depurar
+                    window.location.href = dir;
+                }
+            });
+        }
+
+
     </script>
 </body>
 

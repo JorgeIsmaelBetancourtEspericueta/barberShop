@@ -46,7 +46,7 @@
                 <!--<span>or use your email password</span>-->
                 <input type="email" name="usuario" id="usuario" required placeholder="Email">
                 <input type="password" name="password" id="password" required placeholder="Contraseña">
-                <a href="#">¿Olvidaste tu contraseña?</a>
+                <a href="recuperarContra.php">¿Olvidaste tu contraseña?</a>
                 <button>Ingresar</button>
             </form>
         </div>

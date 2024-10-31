@@ -77,7 +77,7 @@ if (isset($_POST['accion']) && $_POST['accion'] == 'editar') {
                 $query = "UPDATE barbero SET nombre='$nombre', telefono='$telefono' WHERE idBarbero='$idBarbero'";
                 if (mysqli_query($conexion, $query)) {
                     // Respuesta exitosa
-                    // redireccionar("Información actualizada correctamente", "barberos.php");
+                    redireccionar("Información actualizada correctamente", "barberos.php");
                 } else {
                     redireccionar('Error al actualizar el barbero.', "barberos.php");
                 }

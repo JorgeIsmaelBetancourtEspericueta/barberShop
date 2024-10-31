@@ -8,7 +8,7 @@ USE barberia;
 CREATE TABLE barbero (
   idBarbero INT NOT NULL AUTO_INCREMENT,
   nombre VARCHAR(256) NOT NULL,
-  email VARCHAR(100) NOT NULL,
+  telefono VARCHAR(100) NOT NULL,
   PRIMARY KEY (idBarbero)
 );
 

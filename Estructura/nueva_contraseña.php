@@ -1,16 +1,47 @@
 <?php
-include('includes/utilerias.php');
 session_start();
+include('includes/utilerias.php');
 
-// Verifica si el usuario ya está autenticado o si tiene una sesión iniciada
-if (isset($_SESSION['usuario'])) {
-    redireccionar('La sesión ya está iniciada', 'index.php');
-    die();
+// Verifica si la variable de sesión 'email_recuperacion' está configurada
+if (!isset($_SESSION['email_recuperacion'])) {
+    redireccionar('Sesión no válida. Por favor, inténtalo de nuevo.', 'login.php');
+    exit();
 }
 
-if (isset($_SESSION['administrador'])) {
-    redireccionar('La sesión ya está iniciada', 'inicioAdmon.php');
-    die();
+// Procesar el formulario cuando se envía
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_SESSION['email_recuperacion'];
+    $nuevaContrasena = $_POST['nueva_contra'];
+    $confirmarContrasena = $_POST['confirmar_contra'];
+
+    // Verifica si las contraseñas coinciden
+    if ($nuevaContrasena !== $confirmarContrasena) {
+        echo "<script>alert('Las contraseñas no coinciden. Por favor, inténtalo de nuevo.');</script>";
+    } else {
+        // Hashear la nueva contraseña
+        $nuevaContrasenaHashed = password_hash($nuevaContrasena, PASSWORD_DEFAULT);
+
+        $conexion = conectar();
+
+        if (!$conexion) {
+            echo "<script>alert('Error en la conexión a la base de datos.');</script>";
+        } else {
+            // Actualizar la contraseña en la base de datos
+            $stmt = $conexion->prepare("UPDATE usuarios SET password = ? WHERE email = ?");
+            $stmt->bind_param("ss", $nuevaContrasenaHashed, $email);
+            $stmt->execute();
+
+            if ($stmt->affected_rows > 0) {
+                // Contraseña cambiada con éxito
+                echo "<script>alert('Contraseña cambiada con éxito'); window.location.href = 'login.php';</script>";
+            } else {
+                echo "<script>alert('Error al cambiar la contraseña. Por favor, inténtalo de nuevo.');</script>";
+            }
+
+            $stmt->close();
+            $conexion->close();
+        }
+    }
 }
 ?>
 
@@ -27,7 +58,7 @@ if (isset($_SESSION['administrador'])) {
     <div class="container" id="container">
         <!-- Sección de Nueva Contraseña -->
         <div class="form-container sign-in">
-            <form action="cambiar_contraseña.php" method="post">
+            <form action="" method="post">
                 <h1>Nueva Contraseña</h1>
                 <p>Introduce tu nueva contraseña y confírmala para restablecer el acceso a tu cuenta.</p>
                 <input type="password" name="nueva_contra" required placeholder="Nueva Contraseña">

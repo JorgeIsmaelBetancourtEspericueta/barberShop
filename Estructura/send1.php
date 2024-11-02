@@ -31,25 +31,42 @@ if (!$conexion) {
     return;
 }
 
-try {
-    // Generar un código aleatorio de verificación
-    $codigo = rand(100000, 999999);
+// Verificar si el correo está registrado en la tabla de usuarios
+$stmt = $conexion->prepare("SELECT * FROM usuarios WHERE email = ?");
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
 
-    // Guardar el código y el correo en la sesión
-    $_SESSION['codigo'] = $codigo;
+if ($result->num_rows === 0) {
+    // Si no se encuentra el correo, redirige con un mensaje de error
+    redireccionar('El correo electrónico no está registrado', 'recuperarContra.php');
+    return;
+}
+
+// Generar un código aleatorio de verificación
+$codigo = rand(100000, 999999);
+
+try {
+    // Preparar la consulta de inserción o actualización
+    // Aquí se usa ON DUPLICATE KEY UPDATE para actualizar el código si ya existe un registro con el mismo email
+    $insertStmt = $conexion->prepare("INSERT INTO codigos (codigo, email) VALUES (?, ?) ON DUPLICATE KEY UPDATE codigo = ?");
+    $insertStmt->bind_param("iss", $codigo, $email, $codigo);
+    $insertStmt->execute();
+
+    // Guardar el correo en la sesión para usarlo en la verificación
     $_SESSION['email_recuperacion'] = $email;
 
     // Configuración del servidor SMTP para enviar el correo
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
-    $mail->Username = 'palabarbershop@gmail.com';
-    $mail->Password = 'wizmgqoeovpmwvcm';
+    $mail->Username = 'palabarbershop@gmail.com'; // Tu correo de Gmail
+    $mail->Password = 'wizmgqoeovpmwvcm'; // Tu contraseña de aplicación de Gmail
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
     $mail->Port = 465;
 
     // Configuración del remitente y destinatario
-    $mail->setFrom('palabarbershop@gmail.com');
+    $mail->setFrom('palabarbershop@gmail.com', 'Soporte de Recuperación');
     $mail->addAddress($email);
 
     // Configuración del contenido del correo
@@ -85,4 +102,8 @@ try {
 } catch (Exception $e) {
     echo "<script>alert('El correo no pudo ser enviado. Error: {$mail->ErrorInfo}'); window.location.href = 'recuperarContra.php';</script>";
 }
+
+$stmt->close();
+$insertStmt->close();
+$conexion->close();
 ?>

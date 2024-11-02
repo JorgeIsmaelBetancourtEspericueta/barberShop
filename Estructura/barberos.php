@@ -94,21 +94,32 @@ if (isset($_POST['accion']) && $_POST['accion'] == 'editar') {
 // Obtiene los barberos existentes
 $barberos = mysqli_query($conexion, "SELECT * FROM barbero");
 
-// Comprobar valores antes de redireccionar
+
 if (isset($_POST['accion']) && $_POST['accion'] == 'eliminar') {
     if (isset($_POST['idBarbero'])) {
         $idBarbero = $_POST['idBarbero'];
         $query = "DELETE FROM barbero WHERE idBarbero='$idBarbero'";
         if (mysqli_query($conexion, $query)) {
-            redireccionar("Barbero eliminado exitosamente", "barberos.php");
+            echo json_encode([
+                "success" => true,
+                "message" => "Barbero eliminado exitosamente"
+            ]);
         } else {
-            redireccionar("Error al eliminar en la base de datos.", "barberos.php");
+            echo json_encode([
+                "success" => false,
+                "message" => "Error al eliminar en la base de datos."
+            ]);
         }
     } else {
-        redireccionar("Error al eliminar el barbero", "barberos.php");
-        exit();
+        echo json_encode([
+            "success" => false,
+            "message" => "Error al eliminar el barbero"
+        ]);
     }
+    exit();
 }
+
+
 
 
 
@@ -124,8 +135,8 @@ if (isset($_SESSION['error'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    
+
+
 
 </head>
 
@@ -135,7 +146,7 @@ if (isset($_SESSION['error'])) {
     <title>Gestión de Barberos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <link rel="stylesheet" href="../Diseno/estiloPrincipal.css">
+    <link rel="stylesheet" href="../Diseno/estiloPrincipal.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="../Diseno/estiloBarberos.css">
 
@@ -146,7 +157,7 @@ if (isset($_SESSION['error'])) {
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand me-auto" href="#">Pa' La Barber Shop</a>
-            
+
             <!-- Enlace de login, aparece antes de la hamburguesa en pantallas pequeñas -->
             <?php
             if (isset($_SESSION['administrador'])) {
@@ -154,11 +165,11 @@ if (isset($_SESSION['error'])) {
             } else {
                 echo '<a href="login.php" class="login-button order-lg-2">Ingresar</a>';
             }
-        ?>
+            ?>
 
             <!-- Botón de hamburguesa -->
-            <button class="navbar-toggler order-lg-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-                aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <button class="navbar-toggler order-lg-3" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -172,7 +183,7 @@ if (isset($_SESSION['error'])) {
                     <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
                         <li class="nav-item">
                             <a class="nav-link mx-lg-2 active" aria-current="page" href="cortes.php">Cortes</a>
-                        </li>            
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link mx-lg-2" href="usuario.php">Usuarios</a>
                         </li>
@@ -200,113 +211,126 @@ if (isset($_SESSION['error'])) {
     </nav>
 
     <main>
-    <div class="alto"></div>
+        <div class="alto"></div>
         <div class="bg-image h-100" style="background-color: #c1ed63;">
             <div class="mask d-flex align-items-center h-100">
-            <div class="container">
-                <div class="row justify-content-center">
-                <div class="col-12">
-                    <div class="card">
-                    <div class="card-body p-0">
-                        <div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; height: 700px">
-        <h2>Nuestros barberos</h2>
-        <form action="" method="POST" id="barberoForm">
-            <label for="nombre">Nombre del Barbero:</label>
-            <input type="text" id="nombre" name="nombre" required>
-            <label for="telefono">Teléfono:</label>
-            <input type="tel" id="telefono" name="telefono" required>
-            <input type="hidden" id="idBarbero" name="idBarbero">
-            <button type="submit" id="botonForm" name="accion" value="agregar">Agregar Barbero</button>
-        </form>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body p-0">
+                                    <div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true"
+                                        style="position: relative; height: 700px">
+                                        <h2>Nuestros barberos</h2>
+                                        <form action="" method="POST" id="barberoForm">
+                                            <label for="nombre">Nombre del Barbero:</label>
+                                            <input type="text" id="nombre" name="nombre" required>
+                                            <label for="telefono">Teléfono:</label>
+                                            <input type="tel" id="telefono" name="telefono" required>
+                                            <input type="hidden" id="idBarbero" name="idBarbero">
+                                            <button type="submit" id="botonForm" name="accion" value="agregar">Agregar
+                                                Barbero</button>
+                                        </form>
 
-        <h3>Lista de Barberos</h3>
-        <table id="tablaBarberos">
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Teléfono</th>
-                    <th>Modificar</th>
-                    <th>Eliminar</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($row = mysqli_fetch_assoc($barberos)): ?>
-                    <tr data-id="<?php echo $row['idBarbero']; ?>">
-                        <td><?php echo $row['nombre']; ?></td>
-                        <td><?php echo $row['telefono']; ?></td>
-                        <td>
-                            <button class="btn btn-editar" onclick="editarBarbero(<?php echo $row['idBarbero']; ?>)">Editar</button>
-                        </td>
-                        <td>
-                            <button class="btn btn-eliminar" onclick="eliminarBarbero(<?php echo $row['idBarbero']; ?>)">Eliminar</button>
-                        </td>
-                    </tr>
-                <?php endwhile; ?>
-            </tbody>
-        </table>
+                                        <h3>Lista de Barberos</h3>
+                                        <table id="tablaBarberos">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nombre</th>
+                                                    <th>Teléfono</th>
+                                                    <th>Modificar</th>
+                                                    <th>Eliminar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php while ($row = mysqli_fetch_assoc($barberos)): ?>
+                                                    <tr data-id="<?php echo $row['idBarbero']; ?>">
+                                                        <td><?php echo $row['nombre']; ?></td>
+                                                        <td><?php echo $row['telefono']; ?></td>
+                                                        <td>
+                                                            <button class="btn btn-editar"
+                                                                onclick="editarBarbero(<?php echo $row['idBarbero']; ?>)">Editar</button>
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-eliminar"
+                                                                onclick="eliminarBarbero(<?php echo $row['idBarbero']; ?>)">Eliminar</button>
+                                                        </td>
+                                                    </tr>
+                                                <?php endwhile; ?>
+                                            </tbody>
+                                        </table>
 
-        <script>
-            function editarBarbero(id) {
-                const fila = document.querySelector(`tr[data-id='${id}']`);
-                const nombreActual = fila.cells[0].textContent;
-                const telefonoActual = fila.cells[1].textContent;
+                                        <script>
+                                            function editarBarbero(id) {
+                                                const fila = document.querySelector(`tr[data-id='${id}']`);
+                                                const nombreActual = fila.cells[0].textContent;
+                                                const telefonoActual = fila.cells[1].textContent;
 
-                // Rellena el formulario con los datos actuales
-                document.getElementById('nombre').value = nombreActual;
-                document.getElementById('telefono').value = telefonoActual;
-                document.getElementById('idBarbero').value = id;
+                                                // Rellena el formulario con los datos actuales
+                                                document.getElementById('nombre').value = nombreActual;
+                                                document.getElementById('telefono').value = telefonoActual;
+                                                document.getElementById('idBarbero').value = id;
 
-                // Cambia el botón de 'Agregar' a 'Guardar'
-                document.getElementById('botonForm').innerText = 'Guardar';
-                document.getElementById('botonForm').value = 'editar';
-            }
+                                                // Cambia el botón de 'Agregar' a 'Guardar'
+                                                document.getElementById('botonForm').innerText = 'Guardar';
+                                                document.getElementById('botonForm').value = 'editar';
+                                            }
 
-            function eliminarBarbero(id) {
-                if (confirm("¿Estás seguro de que deseas eliminar este barbero?")) {
-                    const formData = new FormData();
-                    formData.append('accion', 'eliminar');
-                    formData.append('idBarbero', id);
+                                            function eliminarBarbero(id) {
+                                                if (confirm("¿Estás seguro de que deseas eliminar este barbero?")) {
+                                                    const formData = new FormData();
+                                                    formData.append('accion', 'eliminar');
+                                                    formData.append('idBarbero', id);
 
-                    fetch('', {
-                        method: 'POST',
-                        body: formData
-                    })
-                        .then(response => {
-                            if (response.ok) {
-                                const fila = document.querySelector(`tr[data-id='${id}']`);
-                                fila.parentNode.removeChild(fila);
-                                redireccionar("Barbero eliminado exitosamente", "Barberos.php")
-                            } else {
-                                alert('Error al eliminar el barbero.');
-                            }
-                        })
-                        .catch(error => console.error('Error:', error));
-                }
-            }
-
-            function redireccionar(mensaje, dir) {
-                Swal.fire({
-                    title: "Mensaje",
-                    text: mensaje,
-                    icon: "info",
-                    confirmButtonColor: "#4CAF50",
-                    confirmButtonText: "OK"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        console.log("Redireccionando a: " + dir); // Para depurar
-                        window.location.href = dir;
-                    }
-                });
-            }
+                                                    fetch('', {
+                                                        method: 'POST',
+                                                        body: formData
+                                                    })
+                                                        .then(response => response.text()) // Cambia a .text() temporalmente para depurar
+                                                        .then(text => {
+                                                            console.log("Respuesta del servidor:", text); // Verifica que es JSON válido
+                                                            return JSON.parse(text); // Convertir manualmente a JSON
+                                                        })
+                                                        .then(data => {
+                                                            if (data.success) {
+                                                                const fila = document.querySelector(`tr[data-id='${id}']`);
+                                                                if (fila) {
+                                                                    fila.parentNode.removeChild(fila); // Elimina la fila visualmente
+                                                                }
+                                                                redireccionar("Barbero eliminado exitosamente", "barberos.php")
+                                                            } else {
+                                                                redireccionar("No se puede eliminar el barbero, tiene citas registradas", "barberos.php");
+                                                            }
+                                                        })
+                                                        .catch(error => console.error('Error:', error));
+                                                }
+                                            }
 
 
-        </script>
-        </div>
-                    </div>
+
+                                            function redireccionar(mensaje, dir) {
+                                                Swal.fire({
+                                                    title: "Mensaje",
+                                                    text: mensaje,
+                                                    icon: "info",
+                                                    confirmButtonColor: "#4CAF50",
+                                                    confirmButtonText: "OK"
+                                                }).then((result) => {
+                                                    if (result.isConfirmed) {
+                                                        console.log("Redireccionando a: " + dir); // Para depurar
+                                                        window.location.href = dir;
+                                                    }
+                                                });
+                                            }
+
+
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                </div>
-            </div>
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

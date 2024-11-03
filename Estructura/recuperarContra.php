@@ -27,7 +27,7 @@ session_start();
 
         <!-- Sección de verificación de código -->
         <div class="form-container sign-up">
-            <form action="verificar_codigo.php" method="post">
+            <form action="verificar_codigo1.php" method="post">
                 <h1>Ingrese el Código</h1>
                 <p>Introduce el código que enviamos a tu correo para continuar.</p>
                 <input type="text" name="code" id="code" required placeholder="Código de verificación">

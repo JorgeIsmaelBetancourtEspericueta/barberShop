@@ -98,22 +98,41 @@ $barberos = mysqli_query($conexion, "SELECT * FROM barbero");
 if (isset($_POST['accion']) && $_POST['accion'] == 'eliminar') {
     if (isset($_POST['idBarbero'])) {
         $idBarbero = $_POST['idBarbero'];
-        $query = "DELETE FROM barbero WHERE idBarbero='$idBarbero'";
-        if (mysqli_query($conexion, $query)) {
-            echo json_encode([
-                "success" => true,
-                "message" => "Barbero eliminado exitosamente"
-            ]);
+
+        // Primero eliminamos todas las citas asociadas al barbero
+        $deleteCitasQuery = "DELETE FROM citas WHERE idBarbero='$idBarbero'";
+        $deleteCitasResult = mysqli_query($conexion, $deleteCitasQuery);
+
+        // Después eliminamos todas los descansos asociadaos al barbero
+        $deleteDescansoQuery = "DELETE FROM descanso WHERE idBarbero='$idBarbero'";
+        $deleteDescansoResult = mysqli_query($conexion, $deleteDescansoQuery);
+
+
+        // Comprobamos si la eliminación de las citas fue exitosa
+        if ($deleteCitasResult) {
+            // Ahora eliminamos al barbero
+            $deleteBarberoQuery = "DELETE FROM barbero WHERE idBarbero='$idBarbero'";
+            if (mysqli_query($conexion, $deleteBarberoQuery)) {
+                echo json_encode([
+                    "success" => true,
+                    "message" => "Barbero y citas eliminados exitosamente"
+                ]);
+            } else {
+                echo json_encode([
+                    "success" => false,
+                    "message" => "Error al eliminar el barbero en la base de datos."
+                ]);
+            }
         } else {
             echo json_encode([
                 "success" => false,
-                "message" => "Error al eliminar en la base de datos."
+                "message" => "Error al eliminar las citas del barbero en la base de datos."
             ]);
         }
     } else {
         echo json_encode([
             "success" => false,
-            "message" => "Error al eliminar el barbero"
+            "message" => "Error: ID de barbero no especificado."
         ]);
     }
     exit();
@@ -277,7 +296,7 @@ if (isset($_SESSION['error'])) {
                                             }
 
                                             function eliminarBarbero(id) {
-                                                if (confirm("¿Estás seguro de que deseas eliminar este barbero?")) {
+                                                if (confirm("¿Estás seguro de que deseas eliminar este barbero? Se eliminarán todas las citas asociadas")) {
                                                     const formData = new FormData();
                                                     formData.append('accion', 'eliminar');
                                                     formData.append('idBarbero', id);
@@ -286,23 +305,30 @@ if (isset($_SESSION['error'])) {
                                                         method: 'POST',
                                                         body: formData
                                                     })
-                                                        .then(response => response.text()) // Cambia a .text() temporalmente para depurar
+                                                        .then(response => response.text()) // Cambiamos a text() para la depuración
                                                         .then(text => {
-                                                            console.log("Respuesta del servidor:", text); // Verifica que es JSON válido
-                                                            return JSON.parse(text); // Convertir manualmente a JSON
-                                                        })
-                                                        .then(data => {
-                                                            if (data.success) {
-                                                                const fila = document.querySelector(`tr[data-id='${id}']`);
-                                                                if (fila) {
-                                                                    fila.parentNode.removeChild(fila); // Elimina la fila visualmente
+                                                            console.log("Respuesta del servidor:", text); // Verifica que el texto es JSON válido
+                                                            try {
+                                                                const data = JSON.parse(text); // Intenta convertir a JSON
+
+                                                                if (data.success) {
+                                                                    const fila = document.querySelector(`tr[data-id='${id}']`);
+                                                                    if (fila) {
+                                                                        fila.parentNode.removeChild(fila); // Elimina la fila visualmente
+                                                                    }
+                                                                    redireccionar("Barbero eliminado exitosamente", "barberos.php");
+                                                                } else {
+                                                                    redireccionar(data.message || "No se puede eliminar el barbero", "barberos.php");
                                                                 }
-                                                                redireccionar("Barbero eliminado exitosamente", "barberos.php")
-                                                            } else {
-                                                                redireccionar("No se puede eliminar el barbero, tiene citas registradas", "barberos.php");
+                                                            } catch (error) {
+                                                                console.error("Error de conversión JSON:", error);
+                                                                alert("Error en la respuesta del servidor. Intente nuevamente.");
                                                             }
                                                         })
-                                                        .catch(error => console.error('Error:', error));
+                                                        .catch(error => {
+                                                            console.error('Error de red:', error);
+                                                            redireccionar("No se puede eliminar el barbero en este momento", "barberos.php");
+                                                        });
                                                 }
                                             }
 

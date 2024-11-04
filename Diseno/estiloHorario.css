@@ -226,3 +226,50 @@ thead {
     padding: 10px;
     height: 250px;
 }
+
+.custom-icon-color {
+    color: #588100; /* Cambia esto al color que quieras */
+}
+
+.custom-bg {
+    background-color: #588100 !important; /* Color personalizado */
+    border-radius: 10px;
+    /* padding: 20px;
+    margin: 0;
+    margin-top: 0; */
+}
+
+.py-2, .p-0, .rounded-0{
+    padding: 0; 
+    padding-top: 0;
+ }
+ 
+ .card{
+     border: none;
+     border-radius: 10px !important;
+ }
+ 
+ .btn{
+     border: none !important;
+     border-radius: 10px !important;
+ }
+
+ .btn:hover{
+    background-color: #000 !important;
+    border-radius: 10px !important;
+}
+
+.inputBarbero{
+    margin-top: 10px;
+}
+
+.cont{
+    margin-left: 10px;
+    
+}
+
+.cont2{
+    margin-right: 30px;
+}
+
+

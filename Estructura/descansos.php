@@ -86,6 +86,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pa' La Barber Shop - Descansos</title>
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"  defer></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" defer></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+
+
     <link rel="stylesheet" href="../Diseno/estiloHorario.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -202,49 +210,75 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
         <div class="d-flex justify-content-center align-items-center" style="background-color: white;">
-            <div class="w-50">
-                <h2 class="text-center mb-4">Agregar Descanso</h2>
-                <form method="POST" action="descansos.php" class="form-row justify-content-center">
-                    <!-- Campo de nombre -->
-                    <div class="form-group col-md-10">
-                        <select class="form-control" id="barbero" name="barbero">
-                            <option value="" disabled selected>Selecciona barbero</option>
-                                <?php
-                                    // Verificar si la consulta tiene resultados
-                                    if ($listaBarberos->num_rows > 0) {
-                                        while($row = $listaBarberos->fetch_assoc()) {
-                                            echo '<option value="' . $row["idBarbero"] . '">' . $row["nombre"] . '</option>';
-                                        }
-                                    } else {
-                                        echo '<option value="" disabled>No hay barberos disponibles</option>';
-                                    }
-                                ?>
-                        </select>
-                    </div>
+            <!-- <div class="w-50"> -->
 
-                    <div class="container">
-                        <div class="form-group col-md-10">
-                            <div class="input-group mb-2">
-                                <input type="text" class="form-control" id="fecha" name="fecha" placeholder="Selecciona la fecha">
-                            </div>
+                <div id="agendar" class="container" >
+                    <div class="row justify-content-center" >
+                        <div class="col-12 col-md-8 col-lg-6 pb-5" >
+
+                            
+                            <form method="POST" action="descansos.php" class="form-row justify-content-center">
+                                <div class="card">
+                                    <div class="card-header p-0">
+                                        <div class="custom-bg text-white text-center py-2">
+                                            <div class="custom-bg ">
+                                                <h2 ><i class="fa fa-envelope"></i> Agregar Descanso</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Campo de nombre -->
+                                    <div class="form-group col-md-10">
+                                        <div class="input-group mb-2 inputBarbero">
+                                            <div class="input-group-prepend inputBarbero">
+                                                <div class="input-group-text"><i class="fa fa-list custom-icon-color"></i></div>
+                                            </div>
+                                            <select class="form-control inputBarbero" id="barbero" name="barbero">
+                                                <option value="" disabled selected>Selecciona barbero</option>
+                                                    <?php
+                                                        // Verificar si la consulta tiene resultados
+                                                        if ($listaBarberos->num_rows > 0) {
+                                                            while($row = $listaBarberos->fetch_assoc()) {
+                                                                echo '<option value="' . $row["idBarbero"] . '">' . $row["nombre"] . '</option>';
+                                                            }
+                                                        } else {
+                                                            echo '<option value="" disabled>No hay barberos disponibles</option>';
+                                                        }
+                                                    ?>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="container"> -->
+                                        <div class="form-group col-md-10">
+                                            <div class="input-group mb-2">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text"><i class="fa fa-user custom-icon-color"></i></div>
+                                                </div>
+                                                <input type="text" class="form-control" id="fecha" name="fecha" placeholder="Selecciona la fecha">
+                                            </div>
+                                        </div>
+                                    <!-- </div> -->
+                                    <script>     
+                                        flatpickr("#fecha", {
+                                            locale: "es",  // Idioma a español
+                                                minDate: "today",
+                                                dateFormat: "Y-m-d" // Formato de fecha
+                                        });
+                                    </script>
+                                                    
+                                    
+                                    <!-- Botón de guardar -->
+                                    <div class="form-group col-md-4 align-self-end">
+                                        <input type="hidden" id="idDescanso" name="idDescanso" class="btn btn-info btn-block rounded-0 py-2 custom-bg">
+                                        <button type="submit" class="btn-success btn-block rounded-0 py-2 custom-bg">Guardar</button>
+                                    </div>
+                                </div> 
+                            </form>
                         </div>
                     </div>
-                    <script>     
-                        flatpickr("#fecha", {
-                            locale: "es",  // Idioma a español
-                                minDate: "today",
-                                dateFormat: "Y-m-d" // Formato de fecha
-                        });
-                    </script>
-                                    
-                    
-                    <!-- Botón de guardar -->
-                    <div class="form-group col-md-4 align-self-end">
-                        <input type="hidden" id="idDescanso" name="idDescanso">
-                        <button type="submit" class="btn btn-success btn-block">Guardar</button>
-                    </div>
-                </form>
-            </div>
+                </div>
+            <!-- </div> -->
         </div>
     </main>
 

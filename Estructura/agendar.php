@@ -176,7 +176,7 @@ if (isset($_POST['fecha']) && isset($_POST['barbero'])) {
                         <div class="card">
                             <div class="card-header p-0">
                                 <div class="custom-bg text-white text-center py-2">
-                                <div class="custom-bg ">
+                                    <div class="custom-bg ">
                                         <h3 ><i class="fa fa-envelope"></i> Agendar</h3>
                                         <p class="m-0">Agenda tu cita con nosotros</p>
                                     </div>
@@ -437,17 +437,37 @@ if (isset($_POST['fecha']) && isset($_POST['barbero'])) {
                         <?php if (!empty($citas)): ?>
                             <?php foreach ($citas as $cita): ?>
                                     
-                                            <h4 class="text-white">Cita a nombre de:</h4>
-                                            <p><?php echo htmlspecialchars($cita['idUsuario']); ?></p>
-                                            <h4>Fecha y hora de la cita:</h4>
-                                            <p><?php echo htmlspecialchars($cita['fecha']) . ' ' . htmlspecialchars($cita['hora']); ?></p>
-                                            <h4>Barbero:</h4>
-                                            <p><?php echo htmlspecialchars($cita['nombreBarbero']); ?></p>
-                                            <h4>Servicio:</h4>
-                                            <p><?php echo htmlspecialchars($cita['servicio']); ?></p>
-                                            <form action="cancelar_cita.php" method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta cita?');">
-                                                <input type="hidden" name="idCita" value="<?php echo htmlspecialchars($cita['idCita']); ?>">
-                                                <button type="submit" name="eliminar" id="elim">Eliminar cita</button>
+                                            <h4 class="cont">Cita a nombre de:</h4>
+                                            <div class="input-group mb-2 cont" >
+                                                <div class="input-group-prepend cont">
+                                                    <div class="input-group-text"><i class="fa fa-user custom-icon-color"></i></div>
+                                                </div>
+                                                <p class="form-control cont cont2"><?php echo htmlspecialchars($cita['idUsuario']); ?></p>
+                                            </div>
+                                            <h4 class="cont">Fecha y hora de la cita:</h4>
+                                            <div class="input-group mb-2 cont" >
+                                                <div class="input-group-prepend cont">
+                                                    <div class="input-group-text"><i class="fa fa-user custom-icon-color"></i></div>
+                                                </div>
+                                                <p class="form-control cont cont2"><?php echo htmlspecialchars($cita['fecha']) . ' ' . htmlspecialchars($cita['hora']); ?></p>
+                                            </div>
+                                            <h4 class="cont">Barbero:</h4>
+                                            <div class="input-group mb-2 cont" >
+                                                <div class="input-group-prepend cont">
+                                                    <div class="input-group-text"><i class="fa fa-user custom-icon-color"></i></div>
+                                                </div>
+                                                <p class="form-control cont cont2"><?php echo htmlspecialchars($cita['nombreBarbero']); ?></p>
+                                            </div>
+                                            <h4  class="cont">Servicio:</h4>
+                                            <div class="input-group mb-2 cont" >
+                                                <div class="input-group-prepend cont">
+                                                    <div class="input-group-text"><i class="fa fa-user custom-icon-color"></i></div>
+                                                </div>
+                                                <p class="form-control cont cont2"><?php echo htmlspecialchars($cita['servicio']); ?></p>
+                                            </div>
+                                            <form class="cont cont2" action="cancelar_cita.php" method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta cita?');">
+                                                <input class="cont" type="hidden" name="idCita" value="<?php echo htmlspecialchars($cita['idCita']); ?>">
+                                                <button class="btn btn-info btn-block rounded-0 py-2 custom-bg cont cont2" type="submit" name="eliminar" id="elim">Eliminar cita</button>
                                             </form>
                                             <hr>
                         

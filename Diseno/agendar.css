@@ -355,6 +355,17 @@ img{
 }
 
 
+.cont{
+    margin-left: 10px;
+    
+}
 
+.cont2{
+    margin-right: 30px;
+}
+
+.bot{
+    margin-right: 60px;
+}
 
 /* ------------------ MEDIA QUERYS ----------------- */

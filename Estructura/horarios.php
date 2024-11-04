@@ -101,6 +101,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pa' La Barber Shop - Horarios</title>
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"  defer></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" defer></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
     <link rel="stylesheet" href="../Diseno/estiloHorario.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -111,6 +117,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+
+
 </head>
 <body>
     <nav class="navbar navbar-expand-lg fixed-top">
@@ -219,57 +227,95 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
         <div class="d-flex justify-content-center align-items-center" style="background-color: white;">
-            <div class="w-50">
-                <h2 class="text-center mb-4">Agregar Horario</h2>
-                <form method="POST" action="horarios.php" class="form-row justify-content-center">
-                    <!-- Campo de nombre -->
-                    <div class="form-group col-md-10">
-                        <select class="form-control" id="barbero" name="barbero">
-                            <option value="" disabled selected>Selecciona barbero</option>
-                                <?php
-                                    // Verificar si la consulta tiene resultados
-                                    if ($listaBarberos->num_rows > 0) {
-                                        while($row = $listaBarberos->fetch_assoc()) {
-                                            echo '<option value="' . $row["idBarbero"] . '">' . $row["nombre"] . '</option>';
-                                        }
-                                    } else {
-                                        echo '<option value="" disabled>No hay barberos disponibles</option>';
-                                    }
-                                ?>
-                        </select>
-                    </div>
+            <!-- <div class="w-50"> -->
 
-                    <div class="form-group">
-                        <select class="form-control" id="diaSemana" name="diaSemana" required>
-                            <option value="" disabled selected>Selecciona el día</option>
-                            <option value="Lunes">Lunes</option>
-                            <option value="Martes">Martes</option>
-                            <option value="Miércoles">Miércoles</option>
-                            <option value="Jueves">Jueves</option>
-                            <option value="Viernes">Viernes</option>
-                            <option value="Sábado">Sábado</option>
-                            <option value="Domingo">Domingo</option>
-                        </select>
-                    </div>
+            <div id="agendar" class="container" >
+            <div class="row justify-content-center" >
+                <div class="col-12 col-md-8 col-lg-6 pb-5" >
 
-                    <div class="form-group">
-                        <label for="hora" class="font-weight-bold">Hora Inicio</label>
-                        <input type="time" class="form-control" id="horaInicio" name="horaInicio" required>
-                    </div>
+                            
 
-                    <div class="form-group">
-                        <label for="hora" class="font-weight-bold">Hora Fin</label>
-                        <input type="time" class="form-control" id="horaFin" name="horaFin" required>
+                            <form method="POST" action="horarios.php" class="">
+                            <div class="card">
+                                <div class="card-header p-0">
+                                    <div class="custom-bg text-white text-center py-2">
+                                        <div class="custom-bg ">
+                                            <h2 ><i class="fa fa-envelope"></i> Agregar horario</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Campo de nombre -->
+                                <div class="form-group">
+                                    <div class="input-group mb-2 inputBarbero cont">
+                                            <div class="input-group-prepend inputBarbero cont">
+                                                <div class="input-group-text"><i class="fa fa-list custom-icon-color"></i></div>
+                                            </div>
+                                        <select class="form-control inputBarbero cont cont2" id="barbero" name="barbero">
+                                            <option value="" disabled selected>Selecciona barbero</option>
+                                                <?php
+                                                    // Verificar si la consulta tiene resultados
+                                                    if ($listaBarberos->num_rows > 0) {
+                                                        while($row = $listaBarberos->fetch_assoc()) {
+                                                            echo '<option value="' . $row["idBarbero"] . '">' . $row["nombre"] . '</option>';
+                                                        }
+                                                    } else {
+                                                        echo '<option value="" disabled>No hay barberos disponibles</option>';
+                                                    }
+                                                ?>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="input-group mb-2 cont">
+                                        <div class="input-group-prepend cont">
+                                            <div class="input-group-text"><i class="fa fa-list custom-icon-color"></i></div>
+                                        </div>
+                                        <select class="form-control cont cont2" id="diaSemana" name="diaSemana" required>
+                                            <option value="" disabled selected>Selecciona el día</option>
+                                            <option value="Lunes">Lunes</option>
+                                            <option value="Martes">Martes</option>
+                                            <option value="Miércoles">Miércoles</option>
+                                            <option value="Jueves">Jueves</option>
+                                            <option value="Viernes">Viernes</option>
+                                            <option value="Sábado">Sábado</option>
+                                            <option value="Domingo">Domingo</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="hora" class="font-weight-bold cont">Hora Inicio</label>
+                                    <div class="input-group mb-2 cont" >
+                                        <div class="input-group-prepend cont">
+                                            <div class="input-group-text"><i class="fa fa-user custom-icon-color"></i></div>
+                                        </div>
+                                        <input type="time" class="form-control cont cont2" id="horaInicio" name="horaInicio" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="hora" class="font-weight-bold cont">Hora Fin</label>
+                                    <div class="input-group mb-2 cont" >
+                                        <div class="input-group-prepend cont">
+                                            <div class="input-group-text"><i class="fa fa-user custom-icon-color"></i></div>
+                                        </div>
+                                        <input type="time" class="form-control cont cont2" id="horaFin" name="horaFin" required>
+                                    </div>
+                                </div>
+                                                
+                                
+                                <!-- Botón de guardar -->
+                                <div class="form-group col-md-4 align-self-end">
+                                    <input type="hidden" id="idHorario" name="idHorario" class="btn btn-info btn-block rounded-0 py-2 custom-bg">
+                                    <button type="submit" class="btn-success btn-block rounded-0 py-2 custom-bg">Guardar</button>
+                                </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                                    
-                    
-                    <!-- Botón de guardar -->
-                    <div class="form-group col-md-4 align-self-end">
-                        <input type="hidden" id="idHorario" name="idHorario">
-                        <button type="submit" class="btn btn-success btn-block">Guardar</button>
-                    </div>
-                </form>
-            </div>
+                </div>
+            <!-- </div> -->
         </div>
     </main>
 

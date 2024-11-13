@@ -22,8 +22,7 @@
     <!--Navbar-->
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand me-auto" href="#">Pa' La Barber Shop</a>
-            
+        <a class="navbar-brand me-auto" href="#"><img src="../Imagenes/logo.png" alt="Logo de Barber Shop"></a></a>            
             <!-- Enlace de login, aparece antes de la hamburguesa en pantallas pequeñas -->
             <?php
             if (isset($_SESSION['usuario']) or isset($_SESSION['administrador']))  {
@@ -45,7 +44,9 @@
             <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
                 aria-labelledby="offcanvasNavbarLabel">
                 <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Logo</h5>
+                   <a class="navbar-brand" href="#">
+                 <img src="../Imagenes/logo.png" alt="Logo de Barber Shop" style="height: 3rem;">
+                    </a>
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
@@ -88,7 +89,9 @@
             <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
                 aria-labelledby="offcanvasNavbarLabel">
                 <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Logo</h5>
+                   <a class="navbar-brand" href="#">
+                 <img src="../Imagenes/logo.png" alt="Logo de Barber Shop" style="height: 3rem;">
+                    </a>
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">

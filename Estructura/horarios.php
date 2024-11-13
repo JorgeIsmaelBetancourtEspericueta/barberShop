@@ -173,6 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </nav>
     <main>
+        
         <div class="alto" style="height: 200px;"></div>
         <div class="bg-image h-100" style="background-color: #c1ed63;">
             <div class="mask d-flex align-items-center h-100">
@@ -181,52 +182,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="col-12">
                     <div class="card">
                     <div class="card-body p-0">
-                        <div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; height: 300px">
-                        <table class="table table-striped mb-0">
-                            <thead style="background-color: #002d72;">
-                            <tr>
-                                <th colspan="4">Filtrar</th>
-                                <th colspan="2">
-                                    <form class="form-inline d-flex" method="GET" action="descansos.php">
-                                        <input class="form-control me-2" type="search" name="buscar" placeholder="Buscar" aria-label="Buscar" style="width: 50%;">
-                                        <button class="btn btn-info my-2 my-sm-0" type="submit">Buscar</button>
-                                    </form>
-                                </th>
-                            </tr>
-                            <tr>
-                                <th scope="col" colspan="1">Barbero</th>
-                                <th scope="col" colspan="1">Dia</th>
-                                <th scope="col" colspan="1">Hora de inicio</th>
-                                <th scope="col" colspan="1">Hora de fin</th>
-                                <th scope="col" colspan="1">Eliminar</th>
-                                <th scope="col" colspan="1">Editar</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php
-                                // Conectar a la base de datos
-                                #$conexion = conectar();
-
-                                // Capturar el valor de búsqueda
-                                $buscar = isset($_GET['buscar']) ? $_GET['buscar'] : '';
-
-                                // Llamar a la función que muestra los usuarios, pasándole el valor de búsqueda
-                                ver_horarios($conexion, $buscar);
-
-                                // Cerrar la conexión
-                                mysqli_close($conexion);
-                            ?>
-                            </tbody>
-                        </table>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                </div>
-            </div>
-            </div>
-        </div>
-        <div class="d-flex justify-content-center align-items-center" style="background-color: white;">
+                        
+                    <div class="d-flex justify-content-center align-items-center" style="background-color: white;">
             <!-- <div class="w-50"> -->
 
             <div id="agendar" class="container" >
@@ -317,6 +274,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             <!-- </div> -->
         </div>
+                        <div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; height: 300px">
+                        
+                        <table class="table table-striped mb-0">
+                            <thead style="background-color: #002d72;">
+                            <tr>
+                                <th colspan="4">Filtrar</th>
+                                <th colspan="2">
+                                    <form class="form-inline d-flex" method="GET" action="descansos.php">
+                                        <input class="form-control me-2" type="search" name="buscar" placeholder="Buscar" aria-label="Buscar" style="width: 50%;">
+                                        <button class="btn btn-info my-2 my-sm-0" type="submit">Buscar</button>
+                                    </form>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th scope="col" colspan="1">Barbero</th>
+                                <th scope="col" colspan="1">Dia</th>
+                                <th scope="col" colspan="1">Hora de inicio</th>
+                                <th scope="col" colspan="1">Hora de fin</th>
+                                <th scope="col" colspan="1">Eliminar</th>
+                                <th scope="col" colspan="1">Editar</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                                // Conectar a la base de datos
+                                #$conexion = conectar();
+
+                                // Capturar el valor de búsqueda
+                                $buscar = isset($_GET['buscar']) ? $_GET['buscar'] : '';
+
+                                // Llamar a la función que muestra los usuarios, pasándole el valor de búsqueda
+                                ver_horarios($conexion, $buscar);
+
+                                // Cerrar la conexión
+                                mysqli_close($conexion);
+                            ?>
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        
     </main>
 
     <footer>

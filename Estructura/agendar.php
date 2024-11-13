@@ -27,7 +27,7 @@ $mensajeCita = '';
 
 // Corrección en el campo citas.idUsuarios (debe ser citas.idUsuario)
 $sql = "SELECT citas.idCita, citas.fecha, citas.hora, citas.servicio, 
-        citas.idUsuario, barbero.nombre AS nombreBarbero
+        citas.idUsuario,citas.nombre, barbero.nombre AS nombreBarbero
         FROM citas
         INNER JOIN usuarios ON citas.idUsuario = usuarios.idUsuario
         INNER JOIN barbero ON citas.idBarbero = barbero.idBarbero
@@ -442,7 +442,7 @@ if (isset($_POST['fecha']) && isset($_POST['barbero'])) {
                                                 <div class="input-group-prepend cont">
                                                     <div class="input-group-text"><i class="fa fa-user custom-icon-color"></i></div>
                                                 </div>
-                                                <p class="form-control cont cont2"><?php echo htmlspecialchars($cita['idUsuario']); ?></p>
+                                                <p class="form-control cont cont2"><?php echo htmlspecialchars($cita['nombre']); ?></p>
                                             </div>
                                             <h4 class="cont">Fecha y hora de la cita:</h4>
                                             <div class="input-group mb-2 cont" >

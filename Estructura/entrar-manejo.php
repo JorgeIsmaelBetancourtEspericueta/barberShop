@@ -53,11 +53,12 @@ if (mysqli_num_rows($resultado) > 0) {
             // Redirigir basado en si el usuario es administrador o no
             if ($es_admin) {
                 $_SESSION['administrador'] = $es_admin;
-                redireccionar('Bienvenido administrador, ' . $usuario, 'inicioAdmon.php');
+                $_SESSION['idAdmon'] = $idCliente;
+                redireccionar('Bienvenido administrador, ' . $nombre, 'inicioAdmon.php');
             } else {
                 $_SESSION['usuario'] = $idCliente;  // Puedes almacenar más información si es necesario
                 $_SESSION['nombre'] = $usuario_escapado;
-                redireccionar('Bienvenido, ' . $nombre, 'index.php');
+                redireccionar('Bienvenido, ' . $nombre,'index.php');
             }
 
             $usuario_encontrado = true;

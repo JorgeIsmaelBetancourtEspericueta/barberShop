@@ -211,11 +211,37 @@ body {
     display: none;
 }
 
-/* Responsividad para móviles */
+/* Responsividad para pantallas medianas (tablets y móviles) */
 @media (max-width: 768px) {
     .container {
-        width: 100%;
-        min-height: auto;
+        width: 90%; /* Ajusta el ancho */
+        padding: 15px; /* Añade un margen interno */
+    }
+
+    .container p {
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .container span {
+        font-size: 11px;
+    }
+
+    .container button {
+        font-size: 11px;
+        padding: 8px 30px;
+    }
+
+    .container input {
+        font-size: 12px;
+        padding: 8px 10px;
+    }
+}
+
+/* Responsividad para pantallas pequeñas (móviles pequeños) */
+@media (max-width: 480px) {
+    .container {
+        width: 95%; /* Abarca casi todo el ancho */
     }
 
     .container p {
@@ -224,11 +250,11 @@ body {
 
     .container button {
         font-size: 10px;
-        padding: 8px 30px;
+        padding: 6px 20px;
     }
 
     .container input {
-        font-size: 12px;
-        padding: 8px 12px;
+        font-size: 11px;
+        padding: 6px 10px;
     }
 }

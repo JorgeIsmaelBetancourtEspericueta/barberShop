@@ -18,6 +18,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $idBarbero = $conexion->real_escape_string($_POST['barbero']); // Escapando cadenas para prevenir SQL Injection
     $fecha = $conexion->real_escape_string($_POST['fecha']);
 
+    if (empty($fecha)) {
+        redireccionar("Por favor, selecciona una fecha.", "descansos.php");
+        exit();
+    }
+
     if($idDescanso=="" || $idDescanso==null){
         $sql = "SELECT * FROM descanso WHERE fecha = '$fecha' AND idBarbero = '$idBarbero'";
         $result = $conexion->query($sql);
@@ -192,7 +197,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             <div class="input-group-prepend inputBarbero">
                                                 <div class="input-group-text"><i class="fa fa-list custom-icon-color"></i></div>
                                             </div>
-                                            <select class="form-control inputBarbero" id="barbero" name="barbero">
+                                            <select class="form-control inputBarbero" id="barbero" name="barbero" required>
                                                 <option value="" disabled selected>Selecciona barbero</option>
                                                     <?php
                                                         // Verificar si la consulta tiene resultados
@@ -214,7 +219,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                 <div class="input-group-prepend">
                                                     <div class="input-group-text"><i class="fa fa-user custom-icon-color"></i></div>
                                                 </div>
-                                                <input type="text" class="form-control" id="fecha" name="fecha" placeholder="Selecciona la fecha">
+                                                <input type="text" class="form-control" id="fecha" name="fecha" placeholder="Selecciona la fecha" required>
                                             </div>
                                         </div>
                                     <!-- </div> -->

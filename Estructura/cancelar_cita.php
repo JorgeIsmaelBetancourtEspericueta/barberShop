@@ -16,12 +16,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             mysqli_stmt_bind_param($stmt, 'i', $idCita);
             $resultado = mysqli_stmt_execute($stmt);
 
-            // if ($resultado) {
-                //redireccionar("Cita cancelada exitosamente.", "citas.php");
-            // } else {
-            //    redireccionar("Error al cancelar la cita.", "agendar.php");
-            // }
-            
+            if ($resultado) {
+                redireccionar("Cita cancelada exitosamente.", "agendar.php");
+            } else {
+                redireccionar("Error al cancelar la cita.", "agendar.php");
+            }
+
             mysqli_stmt_close($stmt);
         } else {
             echo "Error en la preparación de la consulta: " . mysqli_error($conexion);

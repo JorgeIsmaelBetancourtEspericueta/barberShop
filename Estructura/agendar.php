@@ -55,6 +55,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $servicio = $conn->real_escape_string($_POST['servicio']);
     $idBarbero = $conn->real_escape_string($_POST['barbero']);
 
+    if (!preg_match('/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/', $nombre)) {
+        redireccionar("El nombre solo puede contener letras y espacios.", "agendar.php");
+        exit();
+    }
+
     if (empty($usuario)) {
         die("Error: idUsuarios no está definido.");
     }

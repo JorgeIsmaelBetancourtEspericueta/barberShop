@@ -208,7 +208,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             <div class="input-group-prepend inputBarbero cont">
                                                 <div class="input-group-text"><i class="fa fa-list custom-icon-color"></i></div>
                                             </div>
-                                        <select class="form-control inputBarbero cont cont2" id="barbero" name="barbero">
+                                        <select class="form-control inputBarbero cont cont2" id="barbero" name="barbero" required>
                                             <option value="" disabled selected>Selecciona barbero</option>
                                                 <?php
                                                     // Verificar si la consulta tiene resultados

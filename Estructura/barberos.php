@@ -20,6 +20,9 @@ if (isset($_POST['accion']) && $_POST['accion'] == 'agregar') {
             $error = "El número de teléfono debe tener 10 dígitos.";
             redireccionar("El número de teléfono debe tener 10 dígitos.", "barberos.php");
             exit();
+        } elseif (!preg_match('/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/', $nombre)) {
+            redireccionar("El nombre solo puede contener letras y espacios.", "barberos.php");
+            exit();
         } else {
             // Consultas para verificar si el barbero ya existe por nombre o teléfono
             $checkNombreQuery = "SELECT * FROM barbero WHERE nombre='$nombre'";
@@ -67,6 +70,9 @@ if (isset($_POST['accion']) && $_POST['accion'] == 'editar') {
         } else if (strlen($telefono) !== 10 || !ctype_digit($telefono)) {
             $error = "El número de teléfono debe tener 10 dígitos.";
             redireccionar($error, "barberos.php");
+            exit();
+        } elseif (!preg_match('/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/', $nombre)) {
+            redireccionar("El nombre solo puede contener letras y espacios.", "barberos.php");
             exit();
         } else {
             // Consulta SQL para verificar si el barbero ya existe
@@ -175,7 +181,7 @@ if (isset($_SESSION['error'])) {
     <!--Navbar-->
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container-fluid">
-        <a class="navbar-brand me-auto" href="#"><img src="../Imagenes/logo.png" alt="Logo de Barber Shop"></a></a>
+            <a class="navbar-brand me-auto" href="#"><img src="../Imagenes/logo.png" alt="Logo de Barber Shop"></a></a>
             <!-- Enlace de login, aparece antes de la hamburguesa en pantallas pequeñas -->
             <?php
             if (isset($_SESSION['administrador'])) {
@@ -194,8 +200,8 @@ if (isset($_SESSION['error'])) {
             <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
                 aria-labelledby="offcanvasNavbarLabel">
                 <div class="offcanvas-header">
-                <a class="navbar-brand" href="#">
-                 <img src="../Imagenes/logo.png" alt="Logo de Barber Shop" style="height: 3rem;">
+                    <a class="navbar-brand" href="#">
+                        <img src="../Imagenes/logo.png" alt="Logo de Barber Shop" style="height: 3rem;">
                     </a>
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>

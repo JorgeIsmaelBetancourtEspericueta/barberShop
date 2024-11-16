@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -26,8 +28,13 @@ body {
     min-height: 480px;
 }
 
+.container h1 {
+    font-size: 24px; /* Tamaño base para escritorio */
+    margin-bottom: 10px;
+}
+
 .container p {
-    font-size: 14px;
+    font-size: 14px; /* Tamaño base */
     line-height: 20px;
     letter-spacing: 0.3px;
     margin: 20px 0;
@@ -207,15 +214,40 @@ body {
     transform: translateX(200%);
 }
 
-.hidden {
-    display: none;
-}
-
-/* Responsividad para móviles */
+/* Responsividad específica para móviles */
 @media (max-width: 768px) {
     .container {
-        width: 100%;
-        min-height: auto;
+        width: 90%; /* Más pequeño en tablets */
+        padding: 15px;
+    }
+
+    .container h1 {
+        font-size: 18px; /* Encabezados más pequeños */
+    }
+
+    .container p {
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .container button {
+        font-size: 11px;
+        padding: 8px 30px;
+    }
+
+    .container input {
+        font-size: 12px;
+        padding: 8px 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 95%; /* Ocupa casi toda la pantalla en móviles pequeños */
+    }
+
+    .container h1 {
+        font-size: 16px; /* Aún más pequeño */
     }
 
     .container p {
@@ -224,11 +256,11 @@ body {
 
     .container button {
         font-size: 10px;
-        padding: 8px 30px;
+        padding: 6px 20px;
     }
 
     .container input {
-        font-size: 12px;
-        padding: 8px 12px;
+        font-size: 11px;
+        padding: 6px 10px;
     }
 }

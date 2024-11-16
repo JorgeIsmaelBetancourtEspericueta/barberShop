@@ -11,6 +11,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     height: 100vh;
 }
 
@@ -23,8 +24,6 @@ body {
     width: 768px;
     max-width: 100%;
     min-height: 480px;
-    display: flex;
-    flex-direction: row;
 }
 
 .container p {
@@ -89,12 +88,12 @@ body {
     position: absolute;
     top: 0;
     height: 100%;
-    width: 50%;
     transition: all 0.6s ease-in-out;
 }
 
 .sign-in {
     left: 0;
+    width: 50%;
     z-index: 2;
 }
 
@@ -104,6 +103,7 @@ body {
 
 .sign-up {
     left: 0;
+    width: 50%;
     opacity: 0;
     z-index: 1;
 }
@@ -124,6 +124,21 @@ body {
         opacity: 1;
         z-index: 5;
     }
+}
+
+.social-icons {
+    margin: 20px 0;
+}
+
+.social-icons a {
+    border: 1px solid #ccc;
+    border-radius: 20%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 3px;
+    width: 40px;
+    height: 40px;
 }
 
 .toggle-container {
@@ -192,46 +207,6 @@ body {
     transform: translateX(200%);
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
-    .container {
-        width: 90%;
-        flex-direction: column;
-    }
-
-    .form-container,
-    .toggle-container {
-        width: 100%;
-        position: relative;
-        height: auto;
-        border-radius: 30px;
-    }
-
-    .toggle {
-        width: 100%;
-        left: 0;
-        transform: translateX(0);
-        border-radius: 30px;
-    }
-
-    .toggle-panel {
-        width: 100%;
-        transform: translateX(0);
-    }
-
-    .sign-in,
-    .sign-up {
-        width: 100%;
-        position: relative;
-        transform: translateX(0);
-    }
-
-    .container.active .sign-in,
-    .container.active .sign-up {
-        transform: translateX(0);
-    }
-
-    .toggle-container {
-        display: none;
-    }
+.hidden {
+    display: none;
 }

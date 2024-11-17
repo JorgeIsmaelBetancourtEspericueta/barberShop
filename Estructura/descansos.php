@@ -32,7 +32,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         if ($result->num_rows > 0) {
-            redireccionar("La fecha seleccionada ya están ocupada. Por favor, selecciona otra fecha.", "descansos.php");
+            redireccionar("La fecha seleccionada ya está registrada. Por favor, selecciona otra fecha.", "descansos.php");
+            exit;
+        }
+
+        $sql = "SELECT * FROM citas WHERE fecha = '$fecha' AND idBarbero = '$idBarbero'";
+        $result = $conexion->query($sql);
+
+        if (!$result) {
+            die("Error en la consulta: " . $conexion->error);
+        }
+
+        if ($result->num_rows > 0) {
+            redireccionar("No es posible agregar el descanso. Hay citas programadas para esa fecha.", "descansos.php");
             exit;
         }
 
@@ -46,8 +58,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "Error: " . $sql . "<br>" . $conexion->error;
         }
     
-        $conexion->close();
-    }else{
+        //$conexion->close();
+    }else{ //Actualizar
         $sql = "SELECT * FROM descanso WHERE fecha = '$fecha' AND idBarbero = '$idBarbero' AND idDescanso != '$idDescanso'";
         $result = $conexion->query($sql);
 
@@ -56,7 +68,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         if ($result->num_rows > 0) {
-            redireccionar("La fecha seleccionada ya están ocupada. Por favor, selecciona otra fecha.", "descansos.php");
+            redireccionar("La fecha seleccionada ya está registrada. Por favor, selecciona otra fecha.", "descansos.php");
+            exit;
+        }
+
+        $sql = "SELECT * FROM citas WHERE fecha = '$fecha' AND idBarbero = '$idBarbero'";
+        $result = $conexion->query($sql);
+
+        if (!$result) {
+            die("Error en la consulta: " . $conexion->error);
+        }
+
+        if ($result->num_rows > 0) {
+            redireccionar("No es posible agregar el descanso. Hay citas programadas para esa fecha.", "descansos.php");
             exit;
         }
 
@@ -81,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // Cerrar la conexión
-        $conexion->close();
+        //$conexion->close();
     }
 }
 ?>

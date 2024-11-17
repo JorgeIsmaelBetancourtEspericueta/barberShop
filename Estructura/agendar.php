@@ -263,7 +263,7 @@ if (isset($_POST['fecha']) && isset($_POST['barbero'])) {
                                         <div class="input-group-prepend">
                                             <div class="input-group-text"><i class="fa fa-calendar-alt custom-icon-color"></i></div>
                                         </div>
-                                        <input type="text" class="form-control" id="fecha" name="fecha" placeholder="Selecciona la fecha">
+                                        <input type="text" class="form-control" id="fecha" name="fecha" placeholder="Selecciona la fecha" disabled >
                                     </div>
                                 </div>
                                 <script>
@@ -517,6 +517,8 @@ if (isset($_POST['fecha']) && isset($_POST['barbero'])) {
         async function actualizarHorasDisponibles() {
         const fecha = document.getElementById('fecha').value;
         const barbero = document.getElementById('barbero').value;
+
+        document.getElementById("fecha").disabled = false;
 
         if (fecha && barbero) {
             try {

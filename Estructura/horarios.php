@@ -20,7 +20,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $horaInicio = $conexion->real_escape_string($_POST['horaInicio']);
     $horaFin = $conexion->real_escape_string($_POST['horaFin']);
 
+    $Inicio = trim($conexion->real_escape_string($_POST['horaInicio']));
+    $Fin = trim($conexion->real_escape_string($_POST['horaFin']));
+
     if($idHorario=="" || $idHorario==null){
+
+        if ($Inicio < '08:00' || $Inicio > '20:00' || $Fin < '08:00' || $Fin > '20:00' || $Fin < $Inicio) {
+            redireccionar("El horario seleccionado no es válido, seleccione una fecha entre 08:00 am y 08:00 pm", "horarios.php");
+            exit;
+        }
+
         $sql = "SELECT * FROM horarios WHERE idBarbero = '$idBarbero' 
         AND diaSemana = '$dia' 
         AND (
@@ -282,7 +291,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <tr>
                                 <th colspan="4">Filtrar</th>
                                 <th colspan="2">
-                                    <form class="form-inline d-flex" method="GET" action="descansos.php">
+                                    <form class="form-inline d-flex" method="GET" action="horarios.php">
                                         <input class="form-control me-2" type="search" name="buscar" placeholder="Buscar" aria-label="Buscar" style="width: 50%;">
                                         <button class="btn btn-info my-2 my-sm-0" type="submit">Buscar</button>
                                     </form>

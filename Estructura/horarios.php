@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $Inicio = trim($conexion->real_escape_string($_POST['horaInicio']));
     $Fin = trim($conexion->real_escape_string($_POST['horaFin']));
 
-    if($idHorario=="" || $idHorario==null){
+    if ($idHorario == "" || $idHorario == null) {
 
         if ($Inicio < '08:00' || $Inicio > '20:00' || $Fin < '08:00' || $Fin > '20:00' || $Fin < $Inicio) {
             redireccionar("El horario seleccionado no es válido, seleccione una fecha entre 08:00 am y 08:00 pm", "horarios.php");
@@ -57,9 +57,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             echo "Error: " . $sql . "<br>" . $conexion->error;
         }
-    
+
         $conexion->close();
-    }else{
+    } else {
         $sql = "SELECT * FROM horarios WHERE idBarbero = '$idBarbero' 
         AND diaSemana = '$dia' 
         AND idHorario != '$idHorario'
@@ -88,9 +88,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Ejecutar la consulta
             if ($stmt->execute()) {
-                redireccionar("Horario actualizado exitosamente.","horarios.php");
+                redireccionar("Horario actualizado exitosamente.", "horarios.php");
             } else {
-                redireccionar("Error al actualizar el horario: " . $stmt->error,"horarios.php");
+                redireccionar("Error al actualizar el horario: " . $stmt->error, "horarios.php");
             }
 
             // Cerrar la declaración
@@ -106,15 +106,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pa' La Barber Shop - Horarios</title>
 
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"  defer></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" defer></script>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" defer></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" defer></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
     <link rel="stylesheet" href="../Diseno/estiloHorario.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -129,205 +130,206 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container-fluid">
-            
-        <a class="navbar-brand me-auto" href="#"><img src="../Imagenes/logo.png" alt="Logo de Barber Shop"></a></a>                    
-                <!-- Enlace de login, aparece antes de la hamburguesa en pantallas pequeñas -->
-                <?php
-                   echo '<a href="salir.php"" class="login-button order-lg-2">Salir</a>';
-                    
-                ?>
 
-                <!-- Botón de hamburguesa -->
-                <button class="navbar-toggler order-lg-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-                    aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+            <a class="navbar-brand me-auto" href="#"><img src="../Imagenes/logo.png" alt="Logo de Barber Shop"></a></a>
+            <!-- Enlace de login, aparece antes de la hamburguesa en pantallas pequeñas -->
+            <?php
+            echo '<a href="salir.php"" class="login-button order-lg-2">Salir</a>';
 
-                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
-                    aria-labelledby="offcanvasNavbarLabel">
-                    <div class="offcanvas-header">
+            ?>
+
+            <!-- Botón de hamburguesa -->
+            <button class="navbar-toggler order-lg-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
                     <a class="navbar-brand" href="#">
-                 <img src="../Imagenes/logo.png" alt="Logo de Barber Shop" style="height: 3rem;">
+                        <img src="../Imagenes/logo.png" alt="Logo de Barber Shop" style="height: 3rem;">
                     </a>
-                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                    </div>
-                    <div class="offcanvas-body">
-                        <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
-                            <li class="nav-item">
-                                <a class="nav-link mx-lg-2" aria-current="page" href="cortes.php">Cortes</a>
-                            </li>            
-                            <li class="nav-item">
-                                <a class="nav-link mx-lg-2" href="usuario.php">Usuarios</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link mx-lg-2" href="citas.php">Citas</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link mx-lg-2" href="agendar.php">Agendar</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link mx-lg-2" href="descansos.php">Descansos</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link mx-lg-2 active" href="horarios.php">Horarios</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link mx-lg-2" href="barberos.php">Barberos</a>
-                            </li>
-                        </ul>
-                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" aria-current="page" href="cortes.php">Cortes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="usuario.php">Usuarios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="citas.php">Citas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="agendar.php">Agendar</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="descansos.php">Descansos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2 active" href="horarios.php">Horarios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="barberos.php">Barberos</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </nav>
     <main>
-        
+
         <div class="alto" style="height: 200px;"></div>
         <div class="bg-image h-100" style="background-color: #c1ed63;">
             <div class="mask d-flex align-items-center h-100">
-            <div class="container">
-                <div class="row justify-content-center">
-                <div class="col-12">
-                    <div class="card">
-                    <div class="card-body p-0">
-                        
-                    <div class="d-flex justify-content-center align-items-center" style="background-color: white;">
-            <!-- <div class="w-50"> -->
-
-            <div id="agendar" class="container" >
-            <div class="row justify-content-center" >
-                <div class="col-12 col-md-8 col-lg-6 pb-5" >
-
-                            
-
-                            <form method="POST" action="horarios.php" class="">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12">
                             <div class="card">
-                                <div class="card-header p-0">
-                                    <div class="custom-bg text-white text-center py-2">
-                                        <div class="custom-bg ">
-                                            <h2 ><i class="fa fa-envelope"></i> Agregar horario</h2>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Campo de nombre -->
-                                <div class="form-group">
-                                    <div class="input-group mb-2 inputBarbero cont">
-                                            <div class="input-group-prepend inputBarbero cont">
-                                                <div class="input-group-text"><i class="fa fa-list custom-icon-color"></i></div>
+                                <div class="card-body p-0">
+
+                                    <div class="d-flex justify-content-center align-items-center" style="background-color: white;">
+                                        <!-- <div class="w-50"> -->
+
+                                        <div id="agendar" class="container">
+                                            <div class="row justify-content-center">
+                                                <div class="col-12 col-md-8 col-lg-6 pb-5">
+
+
+
+                                                    <form method="POST" action="horarios.php" class="">
+                                                        <div class="card">
+                                                            <div class="card-header p-0">
+                                                                <div class="custom-bg text-white text-center py-2">
+                                                                    <div class="custom-bg ">
+                                                                        <h2><i class="fa fa-envelope"></i> Agregar horario</h2>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- Campo de nombre -->
+                                                            <div class="form-group">
+                                                                <div class="input-group mb-2 inputBarbero cont">
+                                                                    <div class="input-group-prepend inputBarbero cont">
+                                                                        <div class="input-group-text"><i class="fa fa-list custom-icon-color"></i></div>
+                                                                    </div>
+                                                                    <select class="form-control inputBarbero cont cont2" id="barbero" name="barbero" required>
+                                                                        <option value="" disabled selected>Selecciona barbero</option>
+                                                                        <?php
+                                                                        // Verificar si la consulta tiene resultados
+                                                                        if ($listaBarberos->num_rows > 0) {
+                                                                            while ($row = $listaBarberos->fetch_assoc()) {
+                                                                                echo '<option value="' . $row["idBarbero"] . '">' . $row["nombre"] . '</option>';
+                                                                            }
+                                                                        } else {
+                                                                            echo '<option value="" disabled>No hay barberos disponibles</option>';
+                                                                        }
+                                                                        ?>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="input-group mb-2 cont">
+                                                                    <div class="input-group-prepend cont">
+                                                                        <div class="input-group-text"><i class="fa fa-list custom-icon-color"></i></div>
+                                                                    </div>
+                                                                    <select class="form-control cont cont2" id="diaSemana" name="diaSemana" required>
+                                                                        <option value="" disabled selected>Selecciona el día</option>
+                                                                        <option value="Lunes">Lunes</option>
+                                                                        <option value="Martes">Martes</option>
+                                                                        <option value="Miércoles">Miércoles</option>
+                                                                        <option value="Jueves">Jueves</option>
+                                                                        <option value="Viernes">Viernes</option>
+                                                                        <option value="Sábado">Sábado</option>
+                                                                        <option value="Domingo">Domingo</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="hora" class="font-weight-bold cont">Hora Inicio</label>
+                                                                <div class="input-group mb-2 cont">
+                                                                    <div class="input-group-prepend cont">
+                                                                        <div class="input-group-text"><i class="fa fa-user custom-icon-color"></i></div>
+                                                                    </div>
+                                                                    <input type="time" class="form-control cont cont2" id="horaInicio" name="horaInicio" required>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label for="hora" class="font-weight-bold cont">Hora Fin</label>
+                                                                <div class="input-group mb-2 cont">
+                                                                    <div class="input-group-prepend cont">
+                                                                        <div class="input-group-text"><i class="fa fa-user custom-icon-color"></i></div>
+                                                                    </div>
+                                                                    <input type="time" class="form-control cont cont2" id="horaFin" name="horaFin" required>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <!-- Botón de guardar -->
+                                                            <div class="form-group col-md-4 align-self-end">
+                                                                <input type="hidden" id="idHorario" name="idHorario" class="btn btn-info btn-block rounded-0 py-2 custom-bg">
+                                                                <button type="submit" class="btn-success btn-block rounded-0 py-2 custom-bg">Guardar</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
-                                        <select class="form-control inputBarbero cont cont2" id="barbero" name="barbero" required>
-                                            <option value="" disabled selected>Selecciona barbero</option>
+                                        </div>
+                                        <!-- </div> -->
+                                    </div>
+                                    <div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; height: 300px">
+
+                                        <table class="table table-striped mb-0">
+                                            <thead style="background-color: #002d72;">
+                                                <tr>
+                                                    <th colspan="4">Filtrar</th>
+                                                    <th colspan="2">
+                                                        <form class="form-inline d-flex" method="GET" action="horarios.php">
+                                                            <input class="form-control me-2" type="search" name="buscar" placeholder="Buscar" aria-label="Buscar" style="width: 50%;">
+                                                            <button class="btn btn-info my-2 my-sm-0" type="submit">Buscar</button>
+                                                        </form>
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="col" colspan="1">Barbero</th>
+                                                    <th scope="col" colspan="1">Dia</th>
+                                                    <th scope="col" colspan="1">Hora de inicio</th>
+                                                    <th scope="col" colspan="1">Hora de fin</th>
+                                                    <th scope="col" colspan="1">Eliminar</th>
+                                                    <th scope="col" colspan="1">Editar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
                                                 <?php
-                                                    // Verificar si la consulta tiene resultados
-                                                    if ($listaBarberos->num_rows > 0) {
-                                                        while($row = $listaBarberos->fetch_assoc()) {
-                                                            echo '<option value="' . $row["idBarbero"] . '">' . $row["nombre"] . '</option>';
-                                                        }
-                                                    } else {
-                                                        echo '<option value="" disabled>No hay barberos disponibles</option>';
-                                                    }
+                                                // Conectar a la base de datos
+                                                #$conexion = conectar();
+
+                                                // Capturar el valor de búsqueda
+                                                $buscar = isset($_GET['buscar']) ? $_GET['buscar'] : '';
+
+                                                // Llamar a la función que muestra los usuarios, pasándole el valor de búsqueda
+                                                ver_horarios($conexion, $buscar);
+
+                                                // Cerrar la conexión
+                                                mysqli_close($conexion);
                                                 ?>
-                                        </select>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
-
-                                <div class="form-group">
-                                    <div class="input-group mb-2 cont">
-                                        <div class="input-group-prepend cont">
-                                            <div class="input-group-text"><i class="fa fa-list custom-icon-color"></i></div>
-                                        </div>
-                                        <select class="form-control cont cont2" id="diaSemana" name="diaSemana" required>
-                                            <option value="" disabled selected>Selecciona el día</option>
-                                            <option value="Lunes">Lunes</option>
-                                            <option value="Martes">Martes</option>
-                                            <option value="Miércoles">Miércoles</option>
-                                            <option value="Jueves">Jueves</option>
-                                            <option value="Viernes">Viernes</option>
-                                            <option value="Sábado">Sábado</option>
-                                            <option value="Domingo">Domingo</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="hora" class="font-weight-bold cont">Hora Inicio</label>
-                                    <div class="input-group mb-2 cont" >
-                                        <div class="input-group-prepend cont">
-                                            <div class="input-group-text"><i class="fa fa-user custom-icon-color"></i></div>
-                                        </div>
-                                        <input type="time" class="form-control cont cont2" id="horaInicio" name="horaInicio" required>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="hora" class="font-weight-bold cont">Hora Fin</label>
-                                    <div class="input-group mb-2 cont" >
-                                        <div class="input-group-prepend cont">
-                                            <div class="input-group-text"><i class="fa fa-user custom-icon-color"></i></div>
-                                        </div>
-                                        <input type="time" class="form-control cont cont2" id="horaFin" name="horaFin" required>
-                                    </div>
-                                </div>
-                                                
-                                
-                                <!-- Botón de guardar -->
-                                <div class="form-group col-md-4 align-self-end">
-                                    <input type="hidden" id="idHorario" name="idHorario" class="btn btn-info btn-block rounded-0 py-2 custom-bg">
-                                    <button type="submit" class="btn-success btn-block rounded-0 py-2 custom-bg">Guardar</button>
-                                </div>
-                                </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            <!-- </div> -->
-        </div>
-                        <div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; height: 300px">
-                        
-                        <table class="table table-striped mb-0">
-                            <thead style="background-color: #002d72;">
-                            <tr>
-                                <th colspan="4">Filtrar</th>
-                                <th colspan="2">
-                                    <form class="form-inline d-flex" method="GET" action="horarios.php">
-                                        <input class="form-control me-2" type="search" name="buscar" placeholder="Buscar" aria-label="Buscar" style="width: 50%;">
-                                        <button class="btn btn-info my-2 my-sm-0" type="submit">Buscar</button>
-                                    </form>
-                                </th>
-                            </tr>
-                            <tr>
-                                <th scope="col" colspan="1">Barbero</th>
-                                <th scope="col" colspan="1">Dia</th>
-                                <th scope="col" colspan="1">Hora de inicio</th>
-                                <th scope="col" colspan="1">Hora de fin</th>
-                                <th scope="col" colspan="1">Eliminar</th>
-                                <th scope="col" colspan="1">Editar</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php
-                                // Conectar a la base de datos
-                                #$conexion = conectar();
-
-                                // Capturar el valor de búsqueda
-                                $buscar = isset($_GET['buscar']) ? $_GET['buscar'] : '';
-
-                                // Llamar a la función que muestra los usuarios, pasándole el valor de búsqueda
-                                ver_horarios($conexion, $buscar);
-
-                                // Cerrar la conexión
-                                mysqli_close($conexion);
-                            ?>
-                            </tbody>
-                        </table>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                </div>
-            </div>
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -345,10 +347,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     </script>
 </body>
+
 </html>
 
 <?php
-function ver_horarios($conexion, $buscar = '') {
+function ver_horarios($conexion, $buscar = '')
+{
     // Si hay un valor de búsqueda, agregar una cláusula WHERE a la consulta
     if (!empty($buscar)) {
         $sql = "SELECT idHorario, horarios.idBarbero, barbero.nombre AS nombreBarbero, diaSemana, horaInicio, horaFin
@@ -360,7 +364,7 @@ function ver_horarios($conexion, $buscar = '') {
         $sql = "SELECT idHorario, horarios.idBarbero, barbero.nombre AS nombreBarbero, diaSemana, horaInicio, horaFin 
                 FROM horarios 
                 INNER JOIN barbero ON horarios.idBarbero = barbero.idBarbero";
-    }    
+    }
 
     $resultado = mysqli_query($conexion, $sql);
 
@@ -376,8 +380,8 @@ function ver_horarios($conexion, $buscar = '') {
             $dia = $renglon['diaSemana'];
             $inicio = $renglon['horaInicio'];
             $fin = $renglon['horaFin'];
-            echo
-            "<tr>
+            echo "
+            <tr>
                 <td colspan=\"1\">$nombre</td>
                 <td colspan=\"1\">$dia</td>
                 <td colspan=\"1\">$inicio</td>
@@ -385,33 +389,34 @@ function ver_horarios($conexion, $buscar = '') {
                 <td colspan=\"1\">
                     <form method='POST' action='eliminar_horario.php' style='display:inline;' onsubmit='confirmarEliminacion(event)'>
                         <input type='hidden' name='idHorario' value='$idHorario'>
-                        <button type='submit' class='btn btn-danger btn-sm px-3'>x</button>
+                       <button type='submit' class='btn btn-eliminar'>Eliminar</button>
                     </form>
                 </td>
                 <td colspan=\"1\">
-                    <button type='button' class='btn btn-info btn-sm px-3' onclick='modificar($idHorario)'>x</button>
+                    <button type='button' class='btn btn-editar' onclick='modificar($idHorario)'>Editar</button>
                 </td>
             </tr>";
+            
         }
     } else {
         echo "<tr><td colspan='6'>No se encontraron resultados</td></tr>";
     }
 }
-?> 
-    <!-- Fuera del ciclo -->
-    <script>
-        function modificar(idHorario) {
-            // Hacer la solicitud AJAX
-            fetch(`getHorario.php?id=${idHorario}`)
-                .then(response => response.json())
-                .then(data => {
-                    // Aquí llenamos el formulario con los datos recibidos
-                    document.getElementById('barbero').value = data.idBarbero;
-                    document.getElementById('diaSemana').value = data.diaSemana;
-                    document.getElementById('horaInicio').value = data.horaInicio;
-                    document.getElementById('horaFin').value = data.horaFin;
-                    document.getElementById('idHorario').value = data.idHorario;
-                })
-                .catch(error => console.error('Error:', error));
-        }
-    </script>
+?>
+<!-- Fuera del ciclo -->
+<script>
+    function modificar(idHorario) {
+        // Hacer la solicitud AJAX
+        fetch(`getHorario.php?id=${idHorario}`)
+            .then(response => response.json())
+            .then(data => {
+                // Aquí llenamos el formulario con los datos recibidos
+                document.getElementById('barbero').value = data.idBarbero;
+                document.getElementById('diaSemana').value = data.diaSemana;
+                document.getElementById('horaInicio').value = data.horaInicio;
+                document.getElementById('horaFin').value = data.horaFin;
+                document.getElementById('idHorario').value = data.idHorario;
+            })
+            .catch(error => console.error('Error:', error));
+    }
+</script>

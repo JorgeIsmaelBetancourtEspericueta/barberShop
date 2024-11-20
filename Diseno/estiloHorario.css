@@ -287,4 +287,38 @@ thead {
     margin-right: 30px;
 }
 
+/* Botón de Eliminar (Rojo) */
+.btn-eliminar {
+    background-color: #d9534f !important; /* Rojo original */
+    color: #fff !important; /* Texto blanco */
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
 
+.btn-eliminar:hover {
+    background-color: #b52b27 !important; /* Rojo oscuro */
+}
+
+/* Botón de Editar (Azul) */
+.btn-editar {
+    background-color: #17a2b8 !important; /* Azul original */
+    color: #fff !important; /* Texto blanco */
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+.btn-editar:hover {
+    background-color: #117a8b !important; /* Azul oscuro */
+}

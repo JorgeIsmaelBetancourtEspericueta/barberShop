@@ -210,25 +210,3 @@ body {
 .hidden {
     display: none;
 }
-
-/* Responsividad para móviles */
-@media (max-width: 768px) {
-    .container {
-        width: 100%;
-        min-height: auto;
-    }
-
-    .container p {
-        font-size: 12px;
-    }
-
-    .container button {
-        font-size: 10px;
-        padding: 8px 30px;
-    }
-
-    .container input {
-        font-size: 12px;
-        padding: 8px 12px;
-    }
-}

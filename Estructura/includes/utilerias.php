@@ -46,7 +46,7 @@
     function conectar(){
         DEFINE('SERVIDOR','localhost');
         DEFINE('USUARIO','root');
-        DEFINE('PASSWORD','juanalex14');
+        DEFINE('PASSWORD','28febrero');
         DEFINE('BD','barberia');
 
         $resultado = mysqli_connect(SERVIDOR,USUARIO,PASSWORD,BD);

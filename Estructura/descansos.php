@@ -363,11 +363,11 @@ function ver_Descansos($conexion, $buscar = '') {
                 <td colspan=\"1\">
                     <form method='POST' action='eliminar_descanso.php' style='display:inline;' onsubmit='confirmarEliminacion(event)'>
                         <input type='hidden' name='idDescanso' value='$idDescanso'>
-                        <button type='submit' class='btn btn-danger btn-sm px-3'>x</button>
+                        <button type='submit' class='btn btn-eliminar'>Eliminar</button>
                     </form>
                 </td>
                 <td colspan=\"1\">
-                    <button type='button' class='btn btn-info btn-sm px-3' onclick='modificar($idDescanso)'>x</button>
+                    <button type='button' class='btn btn-editar' onclick='modificar($idHorario)'>Editar</button>
                 </td>
             </tr>";
         }

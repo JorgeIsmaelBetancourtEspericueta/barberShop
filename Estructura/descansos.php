@@ -367,7 +367,7 @@ function ver_Descansos($conexion, $buscar = '') {
                     </form>
                 </td>
                 <td colspan=\"1\">
-                    <button type='button' class='btn btn-editar' onclick='modificar($idHorario)'>Editar</button>
+                    <button type='button' class='btn btn-editar' onclick='modificar($idDescanso)'>Editar</button>
                 </td>
             </tr>";
         }

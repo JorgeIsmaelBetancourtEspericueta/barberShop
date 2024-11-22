@@ -247,16 +247,19 @@ if (isset($_SESSION['error'])) {
                                 <div class="card-body p-0">
                                     <div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true"
                                         style="position: relative; height: 700px">
-                                        <h2>Nuestros barberos</h2>
-                                        <form action="" method="POST" id="barberoForm">
-                                            <label for="nombre">Nombre del Barbero:</label>
-                                            <input type="text" id="nombre" name="nombre" required>
-                                            <label for="telefono">Teléfono:</label>
-                                            <input type="tel" id="telefono" name="telefono" required>
-                                            <input type="hidden" id="idBarbero" name="idBarbero">
-                                            <button type="submit" id="botonForm" name="accion" value="agregar">Agregar
-                                                Barbero</button>
-                                        </form>
+                                        <div class="fondo-verde" style="position: relative; height: auto;">
+                                            <h2>Nuestros barberos</h2>
+                                            <form action="" method="POST" id="barberoForm">
+                                                <label for="nombre">Nombre del Barbero:</label>
+                                                <input type="text" id="nombre" name="nombre" required>
+                                                <label for="telefono">Teléfono:</label>
+                                                <input type="tel" id="telefono" name="telefono" required>
+                                                <input type="hidden" id="idBarbero" name="idBarbero">
+                                                <button type="submit" id="botonForm" name="accion" value="agregar">Agregar
+                                                    Barbero</button>
+                                            </form>
+                                        </div>
+                                        
 
                                         <h3>Lista de Barberos</h3>
                                         <table id="tablaBarberos">

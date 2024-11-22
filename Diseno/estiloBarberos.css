@@ -251,17 +251,30 @@ footer {
     height: 130px;
 }
 
+.table-responsive.table-scroll {
+    background-color: whitesmoke;
+    
+}
+.fondo-verde {
+    background-color: #c1ed63; /* Verde claro */
+    padding: 20px;
+    border-radius: 10px 10px 0 0; /* Bordes redondeados arriba */
+}
+
 table,
 th,
+
 td {
     border: 2px solid whitesmoke;
     border-collapse: collapse;
     padding: 10px;
+    
 }
 
 table {
     width: 100%;
     margin-top: 0px;
+    
 }
 
 th {
@@ -277,6 +290,7 @@ tbody {
 thead {
     top: 0;
     position: sticky;
+    
 }
 
 .btn {
@@ -336,10 +350,12 @@ h3 {
     /* Fondo claro */
     border-radius: 6px;
     transition: color 0.3s ease-in-out, transform 0.3s;
+    
 }
 
 h3:hover {
     color: #ffffff;
+    
     /* Cambia a blanco al hacer hover */
     transform: scale(1.03);
     /* Ligero efecto de zoom */
@@ -347,7 +363,7 @@ h3:hover {
 
 /* Estilos para el formulario con ID barberoForm */
 #barberoForm {
-    background-color: #8fc619;
+    background-color: white;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
@@ -356,8 +372,10 @@ h3:hover {
     margin: 20px auto;
     /* Centra el formulario */
     display: flex;
+    
     flex-direction: column;
     gap: 12px;
+    
     /* Espacio entre elementos */
 
 }
@@ -396,7 +414,9 @@ h3:hover {
     padding: 12px;
     border: none;
     border-radius: 50px;
+    max-width: 200px;
     font-size: 1rem;
+    align-self: flex-end;
     cursor: pointer;
     font-weight: bold;
     transition: background-color 0.3s ease-in-out;
@@ -422,12 +442,12 @@ h3:hover {
 
 /* Botón de Editar */
 .btn-editar {
-    background-color: #588100;
+    background-color: #17a2b8;
     /* Verde */
 }
 
 .btn-editar:hover {
-    background-color: #3d5e00;
+    background-color: #117a8b;
     /* Verde oscuro al pasar el mouse */
 }
 

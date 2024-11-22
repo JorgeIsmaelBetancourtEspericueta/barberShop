@@ -382,4 +382,8 @@ img{
     margin-right: 60px;
 }
 
+.btn{
+    color: white !important;
+}
+
 /* ------------------ MEDIA QUERYS ----------------- */

@@ -180,61 +180,59 @@ if (isset($_SESSION['error'])) {
 <body>
     <!--Navbar-->
     <nav class="navbar navbar-expand-lg fixed-top">
-        <div class="container-fluid">
-            <a class="navbar-brand me-auto" href="#"><img src="../Imagenes/logo.png" alt="Logo de Barber Shop"></a></a>
-            <!-- Enlace de login, aparece antes de la hamburguesa en pantallas pequeñas -->
-            <?php
-            if (isset($_SESSION['administrador'])) {
-                echo '<a href="salir.php"" class="login-button order-lg-2">Salir</a>';
-            } else {
-                echo '<a href="login.php" class="login-button order-lg-2">Ingresar</a>';
-            }
-            ?>
+    <div class="container-fluid">
+        <a class="navbar-brand me-auto" href="#"><img src="../Imagenes/logo.png" alt="Logo de Barber Shop" style="height: 4rem;"></a>
+        <?php
+        if (isset($_SESSION['administrador'])) {
+            echo '<a href="salir.php" class="login-button order-lg-2">Salir</a>';
+        } else {
+            echo '<a href="login.php" class="login-button order-lg-2">Ingresar</a>';
+        }
+        ?>
 
-            <!-- Botón de hamburguesa -->
-            <button class="navbar-toggler order-lg-3" type="button" data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+        <!-- Botón de hamburguesa -->
+        <button class="navbar-toggler order-lg-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+            aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
-                aria-labelledby="offcanvasNavbarLabel">
-                <div class="offcanvas-header">
-                    <a class="navbar-brand" href="#">
-                        <img src="../Imagenes/logo.png" alt="Logo de Barber Shop" style="height: 3rem;">
-                    </a>
-                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body">
-                    <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
-                        <li class="nav-item">
-                            <a class="nav-link mx-lg-2 active" aria-current="page" href="cortes.php">Cortes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link mx-lg-2" href="usuario.php">Usuarios</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link mx-lg-2" href="citas.php">Citas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link mx-lg-2" href="agendar.php">Agendar</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link mx-lg-2" href="descansos.php">Descansos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link mx-lg-2" href="horarios.php">Horarios</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link mx-lg-2" href="barberos.php">Barberos</a>
-                        </li>
-
-                    </ul>
-                </div>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+            aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+                <a class="navbar-brand" href="#">
+                    <img src="../Imagenes/logo.png" alt="Logo de Barber Shop" style="height: 3rem;">
+                </a>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
-
+            <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+                    <li class="nav-item">
+                        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'cortes.php' ? 'active' : '' ?>" href="cortes.php">Cortes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'usuario.php' ? 'active' : '' ?>" href="usuario.php">Usuarios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'citas.php' ? 'active' : '' ?>" href="citas.php">Citas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'agendar.php' ? 'active' : '' ?>" href="agendar.php">Agendar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'descansos.php' ? 'active' : '' ?>" href="descansos.php">Descansos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'horarios.php' ? 'active' : '' ?>" href="horarios.php">Horarios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'barberos.php' ? 'active' : '' ?>" href="barberos.php">Barberos</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </nav>
+    </div>
+</nav>
+
 
     <main>
         <div class="alto"></div>

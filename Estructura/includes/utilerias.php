@@ -71,7 +71,7 @@
                 citas.fecha, 
                 citas.hora, 
                 citas.servicio, 
-                usuarios.nombre, 
+                citas.nombre, 
                 barbero.nombre AS nombreBarbero
             FROM 
                 citas

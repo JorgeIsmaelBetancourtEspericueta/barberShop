@@ -18,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         while ($fila = mysqli_fetch_assoc($resultado)) {
             $citas[] = $fila;
         }
+        
     
         // Convertir el array a formato JSON
         echo json_encode(['success' => true, 'resultado' => $citas]);

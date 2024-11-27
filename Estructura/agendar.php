@@ -162,10 +162,10 @@ if (isset($_POST['fecha']) && isset($_POST['barbero'])) {
                 <div class="offcanvas-body">
                     <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
                         <li class="nav-item">
-                            <a href="#" class="nav-link mx-lg-2 active" aria-current="page"  onclick="mostrarDiv('agendar', this)">Agendar</a>
+                            <a id="agendarbar" href="#" class="nav-link mx-lg-2 active" aria-current="page"  onclick="mostrarDiv('agendar', this)">Agendar</a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link mx-lg-2 active" aria-current="page"  onclick="mostrarDiv('miCita', this)">Mi cita</a>
+                            <a href="#" id="miCitabar" class="nav-link mx-lg-2" aria-current="page"  onclick="mostrarDiv('miCita', this)">Mi cita</a>
                         </li>
                     </ul>
                 </div>
@@ -495,14 +495,18 @@ if (isset($_POST['fecha']) && isset($_POST['barbero'])) {
         function mostrarDiv(divId, element) {
             document.getElementById('agendar').style.display = 'none';
             document.getElementById('miCita').style.display = 'none';
+            document.getElementById('agendarbar').classList.remove('active');
+            document.getElementById('miCitabar').classList.remove('active');
             // document.getElementById('barbero').style.display = 'none';
             
             document.getElementById(divId).style.display = 'block';
+            document.getElementById(divId+='bar').classList.add('active');
 
             const links = document.querySelectorAll(".menu a");
             links.forEach((link) => link.classList.remove("selected"));
 
             element.classList.add("selected");
+            
         }
 
         function validarFormulario() {

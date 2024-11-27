@@ -58,7 +58,7 @@
     function ver_citas($conexion,$campo,$valor) {
         $tablaC = '';
         if($campo=='Cliente'){
-            $tablaC='usuarios.nombre';
+            $tablaC='citas.nombre';
         }elseif($campo=='Barbero'){
             $tablaC='barbero.nombre';
         }else{
@@ -86,7 +86,7 @@
                 citas.fecha, 
                 citas.hora, 
                 citas.servicio, 
-                usuarios.nombre, 
+                citas.nombre, 
                 barbero.nombre AS nombreBarbero
             FROM 
                 citas

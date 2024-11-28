@@ -22,6 +22,7 @@ session_start();
                 <p>Escribe el correo electrónico asociado a tu cuenta y te enviaremos un código de verificación.</p>
                 <input type="email" name="email" id="email" required placeholder="Email">
                 <button type="submit">Enviar Código</button>
+                <a href="login.php">Cancelar</a>
             </form>
         </div>
 

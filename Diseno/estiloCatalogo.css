@@ -6,20 +6,23 @@
 }
 
 body {
+    padding-top: 80px; /* Ajustar según el tamaño de tu navbar */
     background-color: #588100; /* Fondo verde */
     overflow-x: hidden;
 }
 
-/* Estilos de la barra de navegación */
+/* Navbar */
 .navbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
     background-color: #fff;
     margin: 20px;
-    border-radius: 16px;
+    border-radius: 16px;  /* Eliminar bordes redondeados */
     padding: 0.5rem 1rem;
     overflow: hidden;
+    z-index: 1050; /* Asegura que la navbar esté por encima del contenido */
+    box-shadow: none; /* Eliminar sombra */
 }
 
 /* Estilo de la imagen del logo */
@@ -69,11 +72,11 @@ body {
 
 /* Offcanvas */
 .offcanvas {
-    background-color: #ffffff; /* Fondo blanco */
-    color: #000; /* Texto negro */
-    border-radius: 16px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1050; /* Asegura que el menú esté por encima de otros elementos */
+    background-color: #ffffff;
+    color: #000;
+    border-radius: 0;  /* Eliminar bordes redondeados */
+    box-shadow: none;  /* Eliminar sombra */
+    z-index: 1049; /* Menú hamburguesa por debajo de la barra de navegación */
 }
 
 /* Offcanvas header */
@@ -83,11 +86,10 @@ body {
     padding: 1rem;
 }
 
-/* Botón de cierre */
 .btn-close {
     color: #000;
     opacity: 1;
-    font-size: 1.2rem; /* Botón de cierre más grande */
+    font-size: 1.2rem;
 }
 
 /* Links del menú */
@@ -97,6 +99,8 @@ body {
     margin: 10px 0;
     text-decoration: none;
     transition: color 0.3s ease;
+    position: relative; /* Necesario para posicionar la línea de forma relativa al enlace */
+    padding-bottom: 5px; /* Agregar un poco de espacio en la parte inferior */
 }
 
 .offcanvas-body .nav-link:hover {
@@ -111,22 +115,26 @@ body {
     height: 2px;
     background: #588100;
     transition: width 0.3s;
+    position: absolute;
+    bottom: 0; /* Colocar la línea al final del enlace */
+    left: 0;
 }
 
+/* La línea se expande al 100% cuando se pasa el mouse */
 .offcanvas-body .nav-link:hover::before {
     width: 100%;
 }
 
 /* Tarjetas de cortes */
 .card-img-top {
-    border-radius: 50px;
+    border-radius: 0;  /* Eliminar bordes redondeados */
     padding: 20px;
     height: 400px;
 }
 
 .card {
-    border-radius: 30px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+    border-radius: 0; /* Eliminar bordes redondeados */
+    box-shadow: none; /* Eliminar sombra */
 }
 
 .card-body {

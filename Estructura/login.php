@@ -53,7 +53,7 @@
         <div class="toggle-container">
             <div class="toggle">
                 <div class="toggle-panel toggle-left">
-                    <h1>Hola, bienvenido!</h1>
+                    <h1>Hola, bienvenid@!</h1>
                     <p>Ingrese su correo electrónico para comenzar su registro</p>
                     <button class="hidden" id="login">Ingresar</button>
                 </div>

@@ -281,8 +281,16 @@ th {
     background-color: #588100;
 }
 
-tbody {
-    background-color: #d7d7d7;
+tbody tr:nth-child(odd) {
+    background-color: #f2f2f2; /* Color para las filas impares */
+}
+
+tbody tr:nth-child(even) {
+    background-color: #ffffff; /* Color para las filas pares */
+}
+
+tbody tr {
+    border-bottom: 1px solid #dee2e6; /* Borde inferior de cada fila */
 }
 
 
@@ -388,7 +396,7 @@ h3:hover {
 }
 
 #barberoForm input[type="text"],
-#barberoForm input[type="email"],
+#barberoForm input[type="tel"],
 #barberoForm select,
 #barberoForm textarea {
     width: 100%;
@@ -401,7 +409,7 @@ h3:hover {
 }
 
 #barberoForm input[type="text"]:focus,
-#barberoForm input[type="email"]:focus,
+#barberoForm input[type="tel"]:focus,
 #barberoForm select:focus,
 #barberoForm textarea:focus {
     border-color: #588100;

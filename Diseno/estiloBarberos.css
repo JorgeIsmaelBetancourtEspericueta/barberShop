@@ -308,7 +308,7 @@ thead {
 }
 
 h2 {
-    color: #255000;
+    color: white;
     /* Color verde oscuro, en consonancia con el tema */
     font-size: 2rem;
     text-align: center;
@@ -326,13 +326,6 @@ h2 {
     transition: transform 0.3s ease-in-out, color 0.3s;
 }
 
-h2:hover {
-    color: white;
-    /* Verde más claro en hover */
-    transform: scale(1.05);
-    /* Efecto de zoom */
-}
-
 /* Ajuste responsivo para pantallas pequeñas */
 @media (max-width: 768px) {
     h2 {
@@ -344,7 +337,7 @@ h2:hover {
 
 /* Estilos para el h3 */
 h3 {
-    color: #255000;
+    color: white;
     /* Verde para mantener coherencia */
     font-size: 1.8rem;
     text-align: center;
@@ -361,13 +354,7 @@ h3 {
     
 }
 
-h3:hover {
-    color: #ffffff;
-    
-    /* Cambia a blanco al hacer hover */
-    transform: scale(1.03);
-    /* Ligero efecto de zoom */
-}
+
 
 /* Estilos para el formulario con ID barberoForm */
 #barberoForm {

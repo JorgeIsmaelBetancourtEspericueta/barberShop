@@ -105,13 +105,17 @@ if (isset($_POST['accion']) && $_POST['accion'] == 'eliminar') {
     if (isset($_POST['idBarbero'])) {
         $idBarbero = $_POST['idBarbero'];
 
-        // Primero eliminamos todas las citas asociadas al barbero
-        $deleteCitasQuery = "DELETE FROM citas WHERE idBarbero='$idBarbero'";
-        $deleteCitasResult = mysqli_query($conexion, $deleteCitasQuery);
-
         // Después eliminamos todas los descansos asociadaos al barbero
         $deleteDescansoQuery = "DELETE FROM descanso WHERE idBarbero='$idBarbero'";
         $deleteDescansoResult = mysqli_query($conexion, $deleteDescansoQuery);
+
+        // Eliminamos todas los Horarios asociadaos al barbero
+        $deleteHorarioQuery = "DELETE FROM horarios WHERE idBarbero='$idBarbero'";
+        $deleteHorarioResult = mysqli_query($conexion, $deleteHorarioQuery);
+
+        // Primero eliminamos todas las citas asociadas al barbero
+        $deleteCitasQuery = "DELETE FROM citas WHERE idBarbero='$idBarbero'";
+        $deleteCitasResult = mysqli_query($conexion, $deleteCitasQuery);
 
 
         // Comprobamos si la eliminación de las citas fue exitosa

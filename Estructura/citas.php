@@ -1,5 +1,18 @@
 <?php
+include('includes/utilerias.php');
 session_start();
+date_default_timezone_set('America/Mazatlan');
+
+$conexion = conectar();
+$hoy = date('Y-m-d');
+
+$sql = "DELETE FROM citas WHERE fecha < '$hoy'";
+
+// Preparar y ejecutar la consulta
+$stmt = $conexion->prepare($sql);
+$stmt->execute();
+
+
 // Verifica que el idUsuario esté en la sesión
 
 if (!isset($_SESSION['administrador']) && !isset($_SESSION['usuario'])) {
